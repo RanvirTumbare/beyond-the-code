@@ -315,7 +315,7 @@ export const AdminDiary: React.FC = () => {
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-[#E8ECE9]">
+          <div className="sticky bottom-0 bg-white pt-4 border-t border-[#E8ECE9] flex justify-end gap-2">
             <Button
               type="button"
               variant="outline"
@@ -325,7 +325,7 @@ export const AdminDiary: React.FC = () => {
               Cancel
             </Button>
             <Button type="submit" variant="primary" size="sm" isLoading={isSaving}>
-              Save Diary Entry
+              Save Article
             </Button>
           </div>
         </form>

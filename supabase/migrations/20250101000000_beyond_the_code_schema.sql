@@ -170,6 +170,7 @@ CREATE TABLE IF NOT EXISTS public.journey_events (
   media JSONB NOT NULL DEFAULT '[]'::jsonb,
   tags TEXT[] NOT NULL DEFAULT '{}',
   featured BOOLEAN NOT NULL DEFAULT false,
+  in_progress BOOLEAN NOT NULL DEFAULT false,
   status TEXT NOT NULL DEFAULT 'published' CHECK (status IN ('draft', 'published')),
   project_id UUID -- Nullable FK reference to projects
 );
@@ -204,6 +205,7 @@ CREATE TABLE IF NOT EXISTS public.projects (
   github_url TEXT,
   live_url TEXT,
   featured BOOLEAN NOT NULL DEFAULT false,
+  in_progress BOOLEAN NOT NULL DEFAULT false,
   status TEXT NOT NULL DEFAULT 'published' CHECK (status IN ('draft', 'published')),
   sort_order INT NOT NULL DEFAULT 0,
   seo_title TEXT,

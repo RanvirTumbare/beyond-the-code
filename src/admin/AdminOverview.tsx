@@ -27,7 +27,7 @@ export const AdminOverview: React.FC = () => {
     {
       label: 'Projects',
       count: projects.length,
-      detail: `${projects.filter((p) => p.status === 'published').length} published`,
+      detail: `${projects.filter((p) => !p.in_progress).length} completed · ${projects.filter((p) => p.in_progress).length} ongoing`,
       icon: Briefcase,
       link: '/admin/projects',
     },

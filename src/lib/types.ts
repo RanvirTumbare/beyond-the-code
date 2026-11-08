@@ -99,6 +99,7 @@ export interface JourneyEvent {
   media: MediaItem[];
   tags: string[];
   featured: boolean;
+  in_progress?: boolean; // true = Ongoing project, false/undefined = Completed project
   status: PublishStatus;
   project_id: string | null;
 }
@@ -137,6 +138,7 @@ export interface Project {
   github_url: string | null;
   live_url: string | null;
   featured: boolean;
+  in_progress?: boolean; // true = Ongoing project, false/undefined = Completed project
   status: PublishStatus;
   sort_order: number;
   seo_title: string | null;

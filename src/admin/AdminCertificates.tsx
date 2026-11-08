@@ -291,7 +291,7 @@ export const AdminCertificates: React.FC = () => {
             helperText="Direct link where visitors can verify this credential."
           />
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-[#E8ECE9]">
+          <div className="sticky bottom-0 bg-white pt-4 border-t border-[#E8ECE9] flex justify-end gap-2">
             <Button
               type="button"
               variant="outline"
@@ -301,7 +301,7 @@ export const AdminCertificates: React.FC = () => {
               Cancel
             </Button>
             <Button type="submit" variant="primary" size="sm" isLoading={isSaving}>
-              Save Certificate
+              Save Certification
             </Button>
           </div>
         </form>

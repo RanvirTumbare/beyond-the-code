@@ -364,11 +364,49 @@ export const INITIAL_PROJECTS: Project[] = [
     github_url: 'https://github.com/ranvir-placeholder/sentinelaudit',
     live_url: 'https://sentinelaudit-demo.placeholder.app',
     featured: true,
+    in_progress: false,
     status: 'published',
     sort_order: 1,
     seo_title: 'SentinelAudit Case Study — Ranvir',
     seo_description:
       'In-depth engineering case study of SentinelAudit: an enterprise role-based access auditor built by Ranvir.',
+  },
+  {
+    id: 'p-2',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    title: 'CloudShield: Zero-Trust Microsegmentation Engine',
+    slug: 'cloudshield-zero-trust-engine',
+    category: 'Cybersecurity',
+    summary:
+      'An ongoing prototype investigating network microsegmentation policies, dynamic access tokens, and real-time behavioral anomaly scoring for cloud systems.',
+    cover_image_url:
+      'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80',
+    problem:
+      'Traditional perimeter firewalls fail when an attacker breaches an internal node and moves laterally across cloud infrastructure.',
+    why_selected:
+      'Zero-trust architecture is essential for modern cloud environments.',
+    solution:
+      'Developing a policy-enforcement daemon that continuously validates mutual TLS identities and enforces ephemeral access tokens.',
+    tech_stack: ['Go', 'TypeScript', 'Docker', 'PostgreSQL', 'Tailwind CSS'],
+    features:
+      '- Ephemeral token generation for inter-service communication\n- Behavioral anomaly detection using sliding network windows\n- Visual dependency topology of cloud microservices',
+    screenshots: [],
+    team: [{ name: 'Ranvir', role: 'Architect & Developer' }],
+    my_contribution:
+      'Designing zero-trust policy algorithms and creating the real-time visual inspection interface.',
+    challenges: 'Minimizing packet latency overhead while inspecting dynamic traffic.',
+    learnings: 'Advanced cloud security, microsegmentation, and dynamic identity verification.',
+    demo_video_url: null,
+    github_url: 'https://github.com/ranvir-placeholder/cloudshield',
+    live_url: null,
+    featured: true,
+    in_progress: true,
+    status: 'published',
+    sort_order: 2,
+    seo_title: 'CloudShield Case Study — Ranvir',
+    seo_description:
+      'Zero-trust microsegmentation engine prototype by Ranvir.',
   },
 ];
 

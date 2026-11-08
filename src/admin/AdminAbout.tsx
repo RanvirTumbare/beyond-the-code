@@ -56,10 +56,11 @@ export const AdminAbout: React.FC = () => {
   // Education item management
   const handleAddEducation = () => {
     const newItem: EducationItem = {
-      degree: 'Degree Title (e.g. B.Tech)',
-      institution: 'University / College Name',
+      degree: 'Degree Title (e.g. B.Tech in Computer Engineering)',
+      institution: 'University / Institute Name',
       period: '2022 — 2026',
-      details: 'Relevant coursework and focus.',
+      details: 'Core subjects and specialization.',
+      score: 'GPA: 8.8 / 10.0',
     };
     setFormData({
       ...formData,
@@ -100,29 +101,29 @@ export const AdminAbout: React.FC = () => {
     }
   };
 
-  const confirmDeleteSkill = async () => {
+  const handleConfirmDeleteSkill = async () => {
     if (!skillToDelete) return;
     const res = await deleteSkill(skillToDelete.id);
     if (res.success) {
       success(`Deleted skill "${skillToDelete.name}".`);
     } else {
-      toastError('Failed to delete skill.');
+      toastError('Failed to remove skill.');
     }
     setSkillToDelete(null);
   };
 
   return (
     <div className="space-y-8 animate-fade-up">
-      {/* Page Header */}
+      {/* Header */}
       <div>
         <span className="text-xs font-semibold uppercase tracking-wider text-[#43866A]">
-          Narrative & Toolkit
+          About Studio
         </span>
         <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#202520]">
           About & Skills Management
         </h1>
         <p className="text-xs sm:text-sm text-[#777F79] mt-1">
-          Manage your personal introduction, educational milestones, and technical skillset.
+          Manage your biography, education records, and categorized technical skills.
         </p>
       </div>
 
@@ -130,57 +131,36 @@ export const AdminAbout: React.FC = () => {
       <form onSubmit={handleSaveAbout} className="space-y-6">
         <div className="bg-white border border-[#E8ECE9] rounded-editorial p-6 shadow-subtle space-y-4">
           <h2 className="font-serif text-lg font-semibold text-[#202520] pb-2 border-b border-[#E8ECE9]">
-            Personal Narrative & Philosophy
+            Bio & Portrait Photo
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <Textarea
-                label="Primary Introduction"
-                value={formData.intro}
-                onChange={(e) => setFormData({ ...formData, intro: e.target.value })}
-                rows={4}
-                required
-              />
-              <Textarea
-                label="Engineering Approach"
-                value={formData.approach}
-                onChange={(e) => setFormData({ ...formData, approach: e.target.value })}
-                rows={3}
-                required
-              />
-              <Textarea
-                label="Personality & Values"
-                value={formData.personality}
-                onChange={(e) => setFormData({ ...formData, personality: e.target.value })}
-                rows={3}
-                required
-              />
-            </div>
-
-            <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+            <div className="md:col-span-4">
               <ImageUploader
-                label="Profile Photo"
+                label="Profile Portrait"
                 value={formData.photo_url}
                 onChange={(url) => setFormData({ ...formData, photo_url: url })}
                 aspectRatio="square"
                 folder="profile"
               />
+            </div>
+
+            <div className="md:col-span-8 space-y-4">
               <Textarea
-                label="Future Aspirations"
-                value={formData.aspirations}
-                onChange={(e) => setFormData({ ...formData, aspirations: e.target.value })}
-                rows={3}
+                label="Primary Introduction"
+                value={formData.intro}
+                onChange={(e) => setFormData({ ...formData, intro: e.target.value })}
+                rows={4}
+                helperText="Appears prominently at the top of your About page."
                 required
               />
+
               <Textarea
-                label="Beyond Technology"
-                value={formData.beyond_technology}
-                onChange={(e) =>
-                  setFormData({ ...formData, beyond_technology: e.target.value })
-                }
+                label="Interests & Focus Areas"
+                value={formData.interests || ''}
+                onChange={(e) => setFormData({ ...formData, interests: e.target.value })}
                 rows={3}
-                required
+                helperText="Technical focus areas (Cybersecurity, SAP/ERP, Data Analytics, Web Engineering)."
               />
             </div>
           </div>
@@ -191,10 +171,10 @@ export const AdminAbout: React.FC = () => {
           <div className="flex items-center justify-between pb-2 border-b border-[#E8ECE9]">
             <div>
               <h2 className="font-serif text-lg font-semibold text-[#202520]">
-                Academic Milestones & Education
+                Education Records
               </h2>
               <p className="text-xs text-[#777F79]">
-                Structured educational institutions, degrees, and coursework details.
+                Academic degrees, institutions, duration, and GPA.
               </p>
             </div>
             <Button
@@ -204,7 +184,7 @@ export const AdminAbout: React.FC = () => {
               onClick={handleAddEducation}
               leftIcon={<Plus className="w-3.5 h-3.5" />}
             >
-              Add Education Record
+              Add Record
             </Button>
           </div>
 
@@ -221,7 +201,7 @@ export const AdminAbout: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleRemoveEducation(idx)}
-                    className="text-xs text-rose-600 hover:underline inline-flex items-center gap-1"
+                    className="text-xs text-rose-600 hover:text-rose-800 flex items-center gap-1"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                     <span>Remove</span>
@@ -230,45 +210,47 @@ export const AdminAbout: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Input
-                    label="Degree / Certificate Title"
+                    label="Degree / Certificate"
                     value={item.degree}
                     onChange={(e) => handleEducationChange(idx, 'degree', e.target.value)}
                     required
                   />
                   <Input
-                    label="Institution Name"
+                    label="Institution / University"
                     value={item.institution}
                     onChange={(e) => handleEducationChange(idx, 'institution', e.target.value)}
                     required
                   />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <Input
-                    label="Period / Years"
+                    label="Time Period"
                     value={item.period}
                     onChange={(e) => handleEducationChange(idx, 'period', e.target.value)}
                     placeholder="2022 — 2026"
                     required
                   />
                   <Input
-                    label="GPA / Grade (Optional)"
+                    label="Score / GPA (Optional)"
                     value={item.score || ''}
                     onChange={(e) => handleEducationChange(idx, 'score', e.target.value)}
-                    placeholder="e.g. Current GPA: 8.8 / 10.0"
+                    placeholder="GPA: 8.8 / 10.0"
                   />
                 </div>
 
                 <Textarea
                   label="Coursework / Details"
-                  value={item.details}
+                  value={item.details || ''}
                   onChange={(e) => handleEducationChange(idx, 'details', e.target.value)}
                   rows={2}
-                  required
                 />
               </div>
             ))}
           </div>
         </div>
 
-        {/* Save Bar */}
+        {/* Action Save Bar */}
         <div className="flex justify-end">
           <Button
             type="submit"
@@ -277,48 +259,47 @@ export const AdminAbout: React.FC = () => {
             isLoading={isSaving}
             leftIcon={<Save className="w-4 h-4" />}
           >
-            Save About & Education
+            Save About Changes
           </Button>
         </div>
       </form>
 
       {/* Skills Manager */}
       <div className="bg-white border border-[#E8ECE9] rounded-editorial p-6 shadow-subtle space-y-6">
-        <div className="pb-2 border-b border-[#E8ECE9]">
+        <div className="pb-3 border-b border-[#E8ECE9]">
           <h2 className="font-serif text-lg font-semibold text-[#202520]">
-            Skills & Competency Toolkit
+            Technical Skills ({skills.length})
           </h2>
           <p className="text-xs text-[#777F79]">
-            Add or remove technical skills grouped by category. Text labels only (no fake percentage bars).
+            Manage technical proficiencies categorized by discipline.
           </p>
         </div>
 
-        {/* Add Skill Bar */}
+        {/* Add Skill Form */}
         <form
           onSubmit={handleAddSkill}
-          className="p-4 bg-[#F7F8F7] border border-[#E8ECE9] rounded-editorial flex flex-col sm:flex-row items-end gap-3"
+          className="p-4 border border-[#D1DFD8] bg-[#EBF3EF]/40 rounded-editorial grid grid-cols-1 sm:grid-cols-12 gap-3 items-end"
         >
-          <div className="flex-1 w-full space-y-1">
-            <label className="text-xs font-semibold uppercase tracking-wider text-[#585F5A]">
-              Skill Name
-            </label>
-            <input
-              type="text"
-              placeholder="e.g. Identity & Access Management (IAM)"
+          <div className="sm:col-span-5">
+            <Input
+              label="Skill Name"
               value={newSkillName}
               onChange={(e) => setNewSkillName(e.target.value)}
-              className="w-full bg-white text-xs sm:text-sm p-2 border border-[#E8ECE9] rounded-editorial focus:ring-2 focus:ring-[#43866A] focus:outline-none"
+              placeholder="e.g. Wireshark, Docker, SAP ABAP"
+              required
             />
           </div>
 
-          <div className="w-full sm:w-44 space-y-1">
-            <label className="text-xs font-semibold uppercase tracking-wider text-[#585F5A]">
+          <div className="sm:col-span-3">
+            <label className="block text-xs font-medium text-[#202520] mb-1">
               Category
             </label>
             <select
               value={newSkillCategory}
-              onChange={(e) => setNewSkillCategory(e.target.value as Skill['category'])}
-              className="w-full bg-white text-xs sm:text-sm p-2 border border-[#E8ECE9] rounded-editorial focus:ring-2 focus:ring-[#43866A] focus:outline-none"
+              onChange={(e) =>
+                setNewSkillCategory(e.target.value as Skill['category'])
+              }
+              className="w-full bg-white text-xs px-3 py-2 border border-[#E8ECE9] rounded-editorial focus:outline-none focus:ring-1 focus:ring-[#43866A]"
             >
               <option value="Cybersecurity">Cybersecurity</option>
               <option value="SAP / ERP">SAP / ERP</option>
@@ -328,73 +309,70 @@ export const AdminAbout: React.FC = () => {
             </select>
           </div>
 
-          <div className="w-full sm:w-40 space-y-1">
-            <label className="text-xs font-semibold uppercase tracking-wider text-[#585F5A]">
-              Proficiency Label
+          <div className="sm:col-span-2">
+            <label className="block text-xs font-medium text-[#202520] mb-1">
+              Level
             </label>
-            <select
+            <input
+              type="text"
               value={newSkillLevel}
               onChange={(e) => setNewSkillLevel(e.target.value)}
-              className="w-full bg-white text-xs sm:text-sm p-2 border border-[#E8ECE9] rounded-editorial focus:ring-2 focus:ring-[#43866A] focus:outline-none"
-            >
-              <option value="Core Proficient">Core Proficient</option>
-              <option value="Working Knowledge">Working Knowledge</option>
-              <option value="Familiar">Familiar</option>
-              <option value="Exploring">Exploring</option>
-            </select>
+              placeholder="Proficient / Familiar"
+              className="w-full bg-white text-xs px-3 py-2 border border-[#E8ECE9] rounded-editorial focus:outline-none focus:ring-1 focus:ring-[#43866A]"
+            />
           </div>
 
-          <Button
-            type="submit"
-            variant="primary"
-            size="sm"
-            className="w-full sm:w-auto h-9"
-            leftIcon={<Plus className="w-3.5 h-3.5" />}
-          >
-            Add Skill
-          </Button>
+          <div className="sm:col-span-2">
+            <Button
+              type="submit"
+              variant="primary"
+              size="md"
+              className="w-full"
+              leftIcon={<Plus className="w-3.5 h-3.5" />}
+            >
+              Add
+            </Button>
+          </div>
         </form>
 
-        {/* Existing Skills List */}
-        <div className="space-y-4">
-          {(
-            [
-              'Cybersecurity',
-              'SAP / ERP',
-              'Data Analytics',
-              'Web Development',
-              'Programming & Tools',
-            ] as const
-          ).map((cat) => {
+        {/* Skills List by Category */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {[
+            'Cybersecurity',
+            'SAP / ERP',
+            'Data Analytics',
+            'Web Development',
+            'Programming & Tools',
+          ].map((cat) => {
             const catSkills = skills.filter((s) => s.category === cat);
             return (
-              <div key={cat} className="space-y-2">
-                <h4 className="text-xs font-semibold text-[#585F5A] uppercase tracking-wider">
+              <div
+                key={cat}
+                className="p-4 border border-[#E8ECE9] rounded-editorial bg-[#F7F8F7]/50 space-y-2"
+              >
+                <span className="text-xs font-semibold text-[#202520] block">
                   {cat} ({catSkills.length})
-                </h4>
-                <div className="flex flex-wrap gap-2">
+                </span>
+                <div className="flex flex-wrap gap-1.5">
                   {catSkills.map((skill) => (
-                    <div
+                    <span
                       key={skill.id}
-                      className="inline-flex items-center gap-2 bg-white border border-[#E8ECE9] pl-3 pr-2 py-1.5 rounded-editorial text-xs shadow-xs"
+                      className="inline-flex items-center gap-1.5 bg-white border border-[#E8ECE9] px-2.5 py-1 rounded text-xs"
                     >
-                      <span className="font-medium text-[#202520]">{skill.name}</span>
-                      <span className="text-[10px] text-[#43866A] bg-[#EBF3EF] px-1.5 py-0.5 rounded font-semibold uppercase">
-                        {skill.level}
-                      </span>
+                      <span>{skill.name}</span>
                       <button
                         type="button"
                         onClick={() => setSkillToDelete(skill)}
                         aria-label={`Delete ${skill.name}`}
-                        className="text-[#9CA39E] hover:text-rose-600 p-0.5 rounded"
+                        className="text-[#9CA39E] hover:text-rose-600 transition-colors"
                       >
-                        <Trash2 className="w-3.5 h-3.5" />
+                        <Trash2 className="w-3 h-3" />
                       </button>
-                    </div>
+                    </span>
                   ))}
                   {catSkills.length === 0 && (
                     <span className="text-xs text-[#9CA39E] italic">
-                      No skills added in this category yet.
+                      No skills added yet
                     </span>
                   )}
                 </div>
@@ -404,15 +382,16 @@ export const AdminAbout: React.FC = () => {
         </div>
       </div>
 
-      {/* Confirm Skill Deletion */}
+      {/* Delete Skill Confirm */}
       <ConfirmDialog
         isOpen={Boolean(skillToDelete)}
         onClose={() => setSkillToDelete(null)}
-        onConfirm={confirmDeleteSkill}
+        onConfirm={handleConfirmDeleteSkill}
         title="Remove Skill"
-        message={`Are you sure you want to remove "${skillToDelete?.name}" from your skills list?`}
+        message={`Are you sure you want to remove "${skillToDelete?.name}"?`}
+        confirmLabel="Remove"
+        isDestructive={true}
       />
     </div>
   );
 };
-

@@ -5,143 +5,110 @@ import { useSiteSettings } from '@/hooks/useSiteSettings';
 
 export const Footer: React.FC = () => {
   const { settings } = useSiteSettings();
-
   const currentYear = new Date().getFullYear();
   const siteTitle = settings?.site_title || 'Beyond the Code';
-  const tagline =
-    settings?.tagline ||
-    'A personal portfolio and digital diary exploring Cybersecurity, SAP/ERP, Data Analytics and Web Engineering.';
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const navLinks = [
+    { label: 'Home', path: '/' },
+    { label: 'About', path: '/about' },
+    { label: 'Projects', path: '/projects' },
+    { label: 'Certifications', path: '/certificates' },
+    { label: 'Articles', path: '/diary' },
+    { label: 'Contact', path: '/contact' },
+  ];
+
   return (
     <footer className="w-full bg-[#F7F8F7] border-t border-[#E8ECE9] mt-auto">
-      <div className="max-w-editorial mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
-          {/* Column 1: Logo & Tagline */}
-          <div className="md:col-span-2 space-y-3">
-            <Link to="/" className="inline-flex items-center gap-1.5">
-              <span className="font-serif text-2xl font-bold tracking-tight text-[#202520]">
-                {siteTitle}
-              </span>
-              <span className="w-2 h-2 rounded-full bg-[#43866A] inline-block" />
-            </Link>
-            <p className="text-sm text-[#777F79] max-w-sm leading-relaxed">
-              {tagline}
-            </p>
-            <div className="pt-2 flex items-center gap-3">
-              {settings?.linkedin_url && (
-                <a
-                  href={settings.linkedin_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn profile"
-                  className="w-9 h-9 rounded-editorial bg-white border border-[#E8ECE9] flex items-center justify-center text-[#585F5A] hover:text-[#43866A] hover:border-[#43866A] transition-colors"
-                >
-                  <Linkedin className="w-4 h-4" />
-                </a>
-              )}
-              {settings?.github_url && (
-                <a
-                  href={settings.github_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub profile"
-                  className="w-9 h-9 rounded-editorial bg-white border border-[#E8ECE9] flex items-center justify-center text-[#585F5A] hover:text-[#43866A] hover:border-[#43866A] transition-colors"
-                >
-                  <Github className="w-4 h-4" />
-                </a>
-              )}
-              {settings?.email && (
-                <a
-                  href={`mailto:${settings.email}`}
-                  aria-label="Send email"
-                  className="w-9 h-9 rounded-editorial bg-white border border-[#E8ECE9] flex items-center justify-center text-[#585F5A] hover:text-[#43866A] hover:border-[#43866A] transition-colors"
-                >
-                  <Mail className="w-4 h-4" />
-                </a>
-              )}
-              {settings?.other_links?.map((link, idx) => (
-                <a
-                  key={idx}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title={link.label}
-                  aria-label={link.label}
-                  className="w-9 h-9 rounded-editorial bg-white border border-[#E8ECE9] flex items-center justify-center text-[#585F5A] hover:text-[#43866A] hover:border-[#43866A] transition-colors"
-                >
-                  <Globe className="w-4 h-4" />
-                </a>
-              ))}
-            </div>
-          </div>
+      <div className="max-w-editorial mx-auto px-4 sm:px-6 md:px-8 py-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-[#E8ECE9]">
+          {/* Logo */}
+          <Link to="/" className="inline-flex items-center gap-1.5">
+            <span className="font-serif text-xl font-bold tracking-tight text-[#202520]">
+              {siteTitle}
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#43866A]" />
+          </Link>
 
-          {/* Column 2: Navigation Links */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-[#202520]">
-              Navigation
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/" className="text-[#777F79] hover:text-[#202520] transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-[#777F79] hover:text-[#202520] transition-colors">
-                  About Me
-                </Link>
-              </li>
-              <li>
-                <Link to="/projects" className="text-[#777F79] hover:text-[#202520] transition-colors">
-                  Projects
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Nav links */}
+          <nav aria-label="Footer Navigation" className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-medium text-[#585F5A]">
+            {navLinks.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className="hover:text-[#202520] transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
 
-          {/* Column 3: Exploration & Journal */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-[#202520]">
-              Credentials & Writing
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link to="/certificates" className="text-[#777F79] hover:text-[#202520] transition-colors">
-                  Certifications
-                </Link>
-              </li>
-              <li>
-                <Link to="/diary" className="text-[#777F79] hover:text-[#202520] transition-colors">
-                  Articles & Diary
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-[#777F79] hover:text-[#202520] transition-colors">
-                  Contact
-                </Link>
-              </li>
-            </ul>
+          {/* Social Icons */}
+          <div className="flex items-center gap-2">
+            {settings?.linkedin_url && (
+              <a
+                href={settings.linkedin_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn profile"
+                className="w-8 h-8 rounded-editorial bg-white border border-[#E8ECE9] flex items-center justify-center text-[#585F5A] hover:text-[#43866A] transition-colors"
+              >
+                <Linkedin className="w-3.5 h-3.5" />
+              </a>
+            )}
+            {settings?.github_url && (
+              <a
+                href={settings.github_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub profile"
+                className="w-8 h-8 rounded-editorial bg-white border border-[#E8ECE9] flex items-center justify-center text-[#585F5A] hover:text-[#43866A] transition-colors"
+              >
+                <Github className="w-3.5 h-3.5" />
+              </a>
+            )}
+            {settings?.email && (
+              <a
+                href={`mailto:${settings.email}`}
+                aria-label="Send email"
+                className="w-8 h-8 rounded-editorial bg-white border border-[#E8ECE9] flex items-center justify-center text-[#585F5A] hover:text-[#43866A] transition-colors"
+              >
+                <Mail className="w-3.5 h-3.5" />
+              </a>
+            )}
+            {settings?.other_links?.map((link, idx) => (
+              <a
+                key={idx}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={link.label}
+                aria-label={link.label}
+                className="w-8 h-8 rounded-editorial bg-white border border-[#E8ECE9] flex items-center justify-center text-[#585F5A] hover:text-[#43866A] transition-colors"
+              >
+                <Globe className="w-3.5 h-3.5" />
+              </a>
+            ))}
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright & Back to Top */}
-        <div className="mt-12 pt-6 border-t border-[#E8ECE9] flex flex-col sm:flex-row items-center justify-between text-xs text-[#777F79] gap-4">
-          <p>© {currentYear} Ranvir. All rights reserved. Designed with editorial simplicity.</p>
+        {/* Bottom Bar */}
+        <div className="pt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-[#777F79] gap-3">
+          <p>© {currentYear} Ranvir. All rights reserved.</p>
+
           <button
+            type="button"
             onClick={scrollToTop}
-            aria-label="Scroll back to top"
-            className="inline-flex items-center gap-1.5 hover:text-[#202520] transition-colors"
+            className="inline-flex items-center gap-1 text-[#777F79] hover:text-[#202520] transition-colors text-xs"
           >
             <span>Back to top</span>
-            <ArrowUp className="w-3.5 h-3.5" />
+            <ArrowUp className="w-3 h-3" />
           </button>
         </div>
       </div>
     </footer>
   );
 };
-

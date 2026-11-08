@@ -144,7 +144,7 @@ export const ProjectDetail: React.FC = () => {
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#43866A] hover:underline mb-2"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>All Case Studies</span>
+            <span>All Projects</span>
           </Link>
 
           <div className="flex flex-wrap items-center gap-2">

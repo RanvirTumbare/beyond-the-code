@@ -3,16 +3,12 @@ import {
   Mail,
   Linkedin,
   Github,
-  Globe,
   Download,
   Send,
   CheckCircle2,
   AlertCircle,
-  MapPin,
-  Clock,
 } from 'lucide-react';
 import { Section } from '@/components/ui/Section';
-import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -32,7 +28,7 @@ export const Contact: React.FC = () => {
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
-  const [honeypot, setHoneypot] = useState(''); // Anti-bot honeypot
+  const [honeypot, setHoneypot] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -42,28 +38,14 @@ export const Contact: React.FC = () => {
     e.preventDefault();
     setErrorMessage(null);
 
-    // 1. Honeypot check (anti-spam bot trap)
+    // Bot honeypot trap
     if (honeypot.trim()) {
-      console.warn('Bot submission caught via honeypot.');
       setSubmitted(true);
       return;
     }
 
-    // 2. Simple client rate limiting: minimum 30 seconds between submissions
-    const lastSentTime = localStorage.getItem('btc_last_message_ts');
-    if (lastSentTime) {
-      const elapsed = Date.now() - Number(lastSentTime);
-      if (elapsed < 30000) {
-        setErrorMessage(
-          'Please wait a few seconds before sending another message to prevent spam.'
-        );
-        return;
-      }
-    }
-
-    // 3. Validation
     if (!name.trim() || !email.trim() || !subject.trim() || !message.trim()) {
-      setErrorMessage('Please fill in all required fields.');
+      setErrorMessage('Please fill in all fields.');
       return;
     }
 
@@ -77,11 +59,10 @@ export const Contact: React.FC = () => {
     setLoading(false);
 
     if (res.success) {
-      localStorage.setItem('btc_last_message_ts', String(Date.now()));
       setSubmitted(true);
-      success('Your inquiry has been sent to Ranvir.');
+      success('Your message has been sent.');
     } else {
-      setErrorMessage(res.error || 'Failed to deliver message. Please try again.');
+      setErrorMessage(res.error || 'Failed to send message.');
       toastError(res.error || 'Failed to send message');
     }
   };
@@ -98,46 +79,43 @@ export const Contact: React.FC = () => {
   return (
     <PageTransition>
       <Helmet>
-        <title>Contact & Inquiries — Ranvir</title>
+        <title>Contact — Ranvir</title>
         <meta
           name="description"
-          content="Get in touch with Ranvir for technical inquiries, cybersecurity opportunities, or academic discussions."
+          content="Get in touch with Ranvir for technical inquiries, cybersecurity opportunities, or collaboration."
         />
       </Helmet>
 
       {/* Header */}
       <Section size="md" background="white" className="border-b border-[#E8ECE9]">
-        <SectionHeading
-          label="Direct Correspondence"
-          title="Get in Touch"
-          subtitle="Whether you have an inquiry regarding a case study, enterprise security research, or full-stack opportunities, my inbox is open."
-        />
+        <div className="mb-2">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#43866A]">
+            Get in Touch
+          </span>
+          <h1 className="font-serif text-3xl font-bold text-[#202520]">
+            Contact
+          </h1>
+        </div>
       </Section>
 
+      {/* Main Content */}
       <Section size="lg" background="secondary">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-editorial mx-auto">
-          {/* Left Column: Direct Contact Info & Resume Download */}
-          <div className="lg:col-span-5 space-y-6">
-            <Card className="bg-white border-[#E8ECE9] p-6 shadow-subtle space-y-6">
-              <div>
-                <h3 className="font-serif text-xl font-bold text-[#202520]">
-                  Contact Information
-                </h3>
-                <p className="text-xs text-[#777F79] mt-1 leading-relaxed">
-                  I typically respond within 24 to 48 hours to academic and professional correspondence.
-                </p>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-editorial mx-auto">
+          {/* Left Column: Direct Links & Resume */}
+          <div className="lg:col-span-5 space-y-4">
+            <Card className="bg-white border-[#E8ECE9] p-6 shadow-subtle space-y-5">
+              <h2 className="font-serif text-lg font-bold text-[#202520] pb-2 border-b border-[#E8ECE9]">
+                Direct Contacts
+              </h2>
 
               <div className="space-y-4 text-xs sm:text-sm">
                 {settings.email && (
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[#EBF3EF] text-[#43866A] flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-[#EBF3EF] text-[#43866A] flex items-center justify-center shrink-0">
                       <Mail className="w-4 h-4" />
                     </div>
                     <div>
-                      <span className="text-[11px] font-semibold uppercase tracking-wider text-[#777F79] block">
-                        Email Address
-                      </span>
+                      <span className="text-[11px] text-[#777F79] block">Email</span>
                       <a
                         href={`mailto:${settings.email}`}
                         className="font-medium text-[#202520] hover:text-[#43866A] transition-colors"
@@ -149,59 +127,51 @@ export const Contact: React.FC = () => {
                 )}
 
                 {settings.linkedin_url && (
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[#EBF3EF] text-[#43866A] flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-[#EBF3EF] text-[#43866A] flex items-center justify-center shrink-0">
                       <Linkedin className="w-4 h-4" />
                     </div>
                     <div>
-                      <span className="text-[11px] font-semibold uppercase tracking-wider text-[#777F79] block">
-                        Professional Network
-                      </span>
+                      <span className="text-[11px] text-[#777F79] block">LinkedIn</span>
                       <a
                         href={settings.linkedin_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="font-medium text-[#202520] hover:text-[#43866A] transition-colors"
                       >
-                        Connect on LinkedIn
+                        LinkedIn Profile
                       </a>
                     </div>
                   </div>
                 )}
 
                 {settings.github_url && (
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[#EBF3EF] text-[#43866A] flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-[#EBF3EF] text-[#43866A] flex items-center justify-center shrink-0">
                       <Github className="w-4 h-4" />
                     </div>
                     <div>
-                      <span className="text-[11px] font-semibold uppercase tracking-wider text-[#777F79] block">
-                        Open Source Repositories
-                      </span>
+                      <span className="text-[11px] text-[#777F79] block">GitHub</span>
                       <a
                         href={settings.github_url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="font-medium text-[#202520] hover:text-[#43866A] transition-colors"
                       >
-                        github.com/ranvir
+                        GitHub Repositories
                       </a>
                     </div>
                   </div>
                 )}
               </div>
 
-              {/* Resume Download CTA */}
-              <div className="pt-4 border-t border-[#E8ECE9]">
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-[#777F79] block mb-2">
-                  Curriculum Vitae
-                </span>
-                {settings.resume_url ? (
+              {settings.resume_url && (
+                <div className="pt-3 border-t border-[#E8ECE9]">
                   <a
                     href={settings.resume_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full block"
+                    className="block"
                   >
                     <Button
                       variant="primary"
@@ -212,108 +182,94 @@ export const Contact: React.FC = () => {
                       Download Resume (PDF)
                     </Button>
                   </a>
-                ) : (
-                  <Button variant="outline" size="sm" className="w-full" disabled>
-                    Resume PDF being updated
-                  </Button>
-                )}
-              </div>
+                </div>
+              )}
             </Card>
           </div>
 
-          {/* Right Column: Contact Message Form */}
+          {/* Right Column: Message Form */}
           <div className="lg:col-span-7">
-            <Card className="bg-white border-[#E8ECE9] p-8 shadow-subtle">
+            <Card className="bg-white border-[#E8ECE9] p-6 shadow-subtle">
               {submitted ? (
-                <div className="text-center py-12 space-y-4 animate-fade-in">
+                <div className="py-12 text-center space-y-3">
                   <div className="w-12 h-12 rounded-full bg-[#EBF3EF] text-[#43866A] flex items-center justify-center mx-auto">
                     <CheckCircle2 className="w-6 h-6" />
                   </div>
-                  <h3 className="font-serif text-2xl font-bold text-[#202520]">
-                    Message Delivered
+                  <h3 className="font-serif text-xl font-bold text-[#202520]">
+                    Message Sent
                   </h3>
-                  <p className="text-sm text-[#777F79] max-w-md mx-auto leading-relaxed">
-                    Thank you for reaching out. Your note has been delivered to Ranvir's inbox. Expect a reply shortly.
+                  <p className="text-xs text-[#777F79] max-w-sm mx-auto">
+                    Thank you. Your message has been received.
                   </p>
-                  <Button variant="outline" size="sm" onClick={resetForm}>
-                    Send Another Note
-                  </Button>
+                  <div className="pt-3">
+                    <Button variant="outline" size="sm" onClick={resetForm}>
+                      Send Another
+                    </Button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <h3 className="font-serif text-xl font-bold text-[#202520]">
-                      Send a Direct Message
-                    </h3>
-                    <p className="text-xs text-[#777F79] mt-0.5">
-                      Your email address will remain confidential.
-                    </p>
+                  {/* Honeypot field (hidden from humans) */}
+                  <div className="hidden" aria-hidden="true">
+                    <input
+                      type="text"
+                      name="hp_website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                    />
                   </div>
 
                   {errorMessage && (
-                    <div className="p-3 bg-rose-50 border border-rose-200 rounded-editorial flex items-start gap-2.5 text-xs text-rose-700">
-                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <div className="p-3 rounded bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
                       <span>{errorMessage}</span>
                     </div>
                   )}
 
-                  {/* Honeypot field for anti-bot spam protection */}
-                  <div className="hidden" aria-hidden="true">
-                    <label>
-                      Leave this empty
-                      <input
-                        type="text"
-                        name="bot_field"
-                        value={honeypot}
-                        onChange={(e) => setHoneypot(e.target.value)}
-                        tabIndex={-1}
-                        autoComplete="off"
-                      />
-                    </label>
-                  </div>
-
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Input
                       label="Your Name"
-                      placeholder="Jane Doe"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                      placeholder="Jane Doe"
                       required
                     />
                     <Input
                       label="Your Email"
                       type="email"
-                      placeholder="jane@example.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      placeholder="jane@example.com"
                       required
                     />
                   </div>
 
                   <Input
                     label="Subject"
-                    placeholder="Regarding SentinelAudit or Collaboration"
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
+                    placeholder="Project Inquiry / Opportunity"
                     required
                   />
 
                   <Textarea
-                    label="Your Message"
-                    placeholder="Write your note, question, or proposal..."
+                    label="Message"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    rows={5}
+                    placeholder="Your message..."
+                    rows={4}
                     required
                   />
 
-                  <div className="pt-2 flex justify-end">
+                  <div className="flex justify-end pt-1">
                     <Button
                       type="submit"
                       variant="primary"
                       size="md"
                       isLoading={loading}
-                      rightIcon={<Send className="w-4 h-4" />}
+                      leftIcon={<Send className="w-3.5 h-3.5" />}
                     >
                       Send Message
                     </Button>
@@ -327,4 +283,3 @@ export const Contact: React.FC = () => {
     </PageTransition>
   );
 };
-

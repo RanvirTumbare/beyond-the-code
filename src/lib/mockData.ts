@@ -37,16 +37,15 @@ export const INITIAL_HOME_CONTENT: HomeContent = {
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
   hero_greeting: 'Hello, I am Ranvir',
-  hero_heading: 'Exploring Technology. Building My Journey.',
+  hero_heading: 'Computer Engineering & Systems.',
   hero_intro:
-    'A Computer Engineering student fascinated by how secure code and enterprise data architectures shape resilient real-world systems. Here I document my technical explorations, college journey, and thoughts on technology.',
+    'Focused on cybersecurity, enterprise SAP architectures, data analytics, and modern web applications.',
   hero_image_url:
     'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
-  status_text: 'Exploring SAP Security & Full-Stack Systems',
+  status_text: 'Cybersecurity & Enterprise Systems',
   location_label: 'Mumbai, India',
-  closing_quote:
-    '"The capacity to learn is a gift; the ability to learn is a skill; the willingness to learn is a choice."',
-  show_explore: true,
+  closing_quote: '',
+  show_explore: false,
   show_projects: true,
   show_recent: true,
   show_certificates: true,
@@ -104,34 +103,31 @@ export const INITIAL_ABOUT_CONTENT: AboutContent = {
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
   intro:
-    'I am Ranvir, a Computer Engineering undergraduate with an insatiable curiosity for how complex systems stay secure, efficient, and user-centric. My focus lies at the intersection of Cybersecurity, Enterprise ERP platforms like SAP, Data Analytics, and Web Engineering.',
+    'Computer Engineering undergraduate specializing in Cybersecurity, Enterprise SAP ERP systems, Data Analytics, and Web Development. I focus on building robust, resilient systems with clean architecture.',
   education: [
     {
-      degree: 'Bachelor of Technology in Computer Engineering',
-      institution: 'University Institute of Technology (Placeholder)',
-      period: '2022 — Present (Expected 2026)',
+      degree: 'B.Tech in Computer Engineering',
+      institution: 'University of Mumbai',
+      period: '2022 — 2026',
       details:
-        'Coursework in Data Structures, Database Systems, Computer Networks, Operating Systems, Cryptography, and Software Engineering.',
-      score: 'Current GPA: 8.8 / 10.0',
+        'Core coursework: Data Structures, Operating Systems, Computer Networks, Database Systems, Network Security.',
+      score: 'GPA: 8.8 / 10.0',
     },
     {
-      degree: 'Higher Secondary Certificate (HSC) — Science & Mathematics',
-      institution: 'Junior College of Science (Placeholder)',
+      degree: 'Higher Secondary Certificate (HSC)',
+      institution: 'Junior College of Science',
       period: '2020 — 2022',
       details:
-        'Major subjects: Physics, Chemistry, Mathematics, and Computer Science fundamentals.',
+        'Physics, Chemistry, Mathematics, Computer Science.',
+      score: '',
     },
   ],
   interests:
-    'Passionate about vulnerability assessment, SAP security authorizations, ETL pipelines, full-stack architectural design, and open-source intelligence.',
-  personality:
-    'Analytical and calm under pressure. I value quiet persistence, clear documentation, asking deep questions, and intellectual humility.',
-  approach:
-    'I believe software is not just about writing lines of code, but about constructing reliable bridges between human needs and machine precision. I approach problems by first understanding the domain mechanics before jumping to syntax.',
-  aspirations:
-    'To lead engineering teams building mission-critical enterprise systems where safety, security, and data integrity cannot be compromised.',
-  beyond_technology:
-    'Outside the terminal, I enjoy documentary photography, reading non-fiction essays on technological history, long distance running, and mentoring junior peers in foundational programming.',
+    'Vulnerability assessment, SAP authorizations, data analytics pipelines, and secure web architectures.',
+  personality: '',
+  approach: '',
+  aspirations: '',
+  beyond_technology: '',
   photo_url:
     'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
 };

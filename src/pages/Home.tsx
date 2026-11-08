@@ -100,7 +100,7 @@ export const Home: React.FC = () => {
         {/* Minimal Single-Screen Bottom Footer Bar */}
         <div className="w-full border-t border-[#E8ECE9] bg-[#F7F8F7]/60 py-3">
           <div className="max-w-editorial mx-auto px-4 sm:px-6 md:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#777F79] gap-3">
-            <p>© {currentYear} Ranvir. Designed with editorial simplicity.</p>
+            <p>© {currentYear} Ranvir</p>
 
             <div className="flex items-center gap-3">
               {settings.linkedin_url && (

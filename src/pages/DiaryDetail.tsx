@@ -69,14 +69,14 @@ export const DiaryDetail: React.FC = () => {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4 py-16">
         <h2 className="font-serif text-2xl font-bold text-[#202520] mb-2">
-          Diary Entry Not Found
+          Article Not Found
         </h2>
         <p className="text-sm text-[#777F79] mb-6">
-          This reflection is missing, relocated, or still in draft status.
+          This article is missing, relocated, or still in draft status.
         </p>
         <Link to="/diary">
           <Button variant="primary" leftIcon={<ArrowLeft className="w-4 h-4" />}>
-            Back to Diary
+            Back to Articles
           </Button>
         </Link>
       </div>
@@ -118,7 +118,7 @@ export const DiaryDetail: React.FC = () => {
             className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#43866A] hover:underline"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Digital Diary</span>
+            <span>All Articles</span>
           </Link>
 
           <div className="flex items-center gap-2">

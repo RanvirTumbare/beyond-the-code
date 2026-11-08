@@ -182,3 +182,4 @@ export function useDiaryDetail(slug: string) {
 
   return { post, loading, error };
 }
+

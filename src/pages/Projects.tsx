@@ -195,3 +195,4 @@ export const Projects: React.FC = () => {
     </PageTransition>
   );
 };
+

@@ -307,3 +307,4 @@ export function DataTable<T extends { id: string; status?: 'draft' | 'published'
     </div>
   );
 }
+

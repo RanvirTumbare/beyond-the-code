@@ -188,3 +188,4 @@ export function useProjectDetail(slug: string) {
 
   return { project, loading, error };
 }
+

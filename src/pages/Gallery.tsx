@@ -315,3 +315,4 @@ export const Gallery: React.FC = () => {
     </PageTransition>
   );
 };
+

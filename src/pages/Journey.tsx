@@ -328,3 +328,4 @@ export const Journey: React.FC = () => {
     </PageTransition>
   );
 };
+

@@ -673,3 +673,4 @@ export const AdminProjects: React.FC = () => {
     </div>
   );
 };
+

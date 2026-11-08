@@ -5,3 +5,4 @@ Disallow: /admin/*
 Disallow: /reset-password
 
 Sitemap: https://beyondthecode.vercel.app/sitemap.xml
+

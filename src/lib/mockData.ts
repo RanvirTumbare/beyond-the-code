@@ -606,3 +606,4 @@ export const INITIAL_GALLERY_ITEMS: GalleryItem[] = [
     status: 'published',
   },
 ];
+

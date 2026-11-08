@@ -91,9 +91,17 @@ export async function uploadMediaFile(
     const uniqueName = `${folder}/${Date.now()}_${safeBase}.${ext}`;
 
     if (!isSupabaseConfigured) {
-      // In offline/mock preview mode, generate data URL or local object URL
-      const fallbackUrl = URL.createObjectURL(processedBlob);
-      return { url: fallbackUrl };
+      // In offline/mock preview mode, generate a persistent Base64 Data URL so it persists across refreshes
+      return new Promise((resolve) => {
+        const fileReader = new FileReader();
+        fileReader.onloadend = () => {
+          resolve({ url: fileReader.result as string });
+        };
+        fileReader.onerror = () => {
+          resolve({ url: URL.createObjectURL(processedBlob) });
+        };
+        fileReader.readAsDataURL(processedBlob);
+      });
     }
 
     // 3. Upload to Supabase 'media' bucket
@@ -121,3 +129,4 @@ export async function uploadMediaFile(
     return { url: '', error: message };
   }
 }
+

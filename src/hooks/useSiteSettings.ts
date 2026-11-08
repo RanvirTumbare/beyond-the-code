@@ -83,3 +83,4 @@ export function useSiteSettings() {
 
   return { settings, loading, error, updateSettings, refresh: fetchSettings };
 }
+

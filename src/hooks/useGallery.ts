@@ -130,3 +130,4 @@ export function useGallery(includeDrafts = false) {
 
   return { items, loading, error, saveItem, deleteItem, refresh: fetchGallery };
 }
+

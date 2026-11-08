@@ -356,3 +356,4 @@ export const AdminGallery: React.FC = () => {
     </div>
   );
 };
+

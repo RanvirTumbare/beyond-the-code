@@ -279,3 +279,4 @@ export const Diary: React.FC = () => {
     </PageTransition>
   );
 };
+

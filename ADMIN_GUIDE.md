@@ -96,3 +96,4 @@ A step-by-step practical guide for Ranvir to curate, author, and manage content 
 2. Click **Upload PDF** or **Replace PDF** to upload your latest curriculum vitae.
 3. Update your LinkedIn, GitHub, or add profile links to Kaggle, LeetCode, or personal blogs.
 4. Click **Save Profile & Resume**. The "Download Resume" buttons across the public website will immediately distribute the new document.
+

@@ -462,3 +462,4 @@ export const Certificates: React.FC = () => {
     </PageTransition>
   );
 };
+

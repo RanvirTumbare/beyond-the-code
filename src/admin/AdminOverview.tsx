@@ -32,16 +32,16 @@ export const AdminOverview: React.FC = () => {
       link: '/admin/projects',
     },
     {
-      label: 'Certificates',
+      label: 'Certifications',
       count: certificates.length,
-      detail: `${certificates.filter((c) => !c.in_progress).length} completed`,
+      detail: `${certificates.filter((c) => !c.in_progress).length} verified`,
       icon: Award,
       link: '/admin/certificates',
     },
     {
-      label: 'Diary Posts',
+      label: 'Articles',
       count: posts.length,
-      detail: `${posts.filter((p) => p.is_future_note).length} future letters`,
+      detail: `${posts.filter((p) => p.is_future_note).length} future notes`,
       icon: BookOpen,
       link: '/admin/diary',
     },
@@ -53,7 +53,7 @@ export const AdminOverview: React.FC = () => {
       link: '/admin/gallery',
     },
     {
-      label: 'Messages',
+      label: 'Inquiries',
       count: messages.length,
       detail: `${unreadCount} unread`,
       icon: Mail,
@@ -75,7 +75,7 @@ export const AdminOverview: React.FC = () => {
             Welcome to Beyond the Code Studio
           </h1>
           <p className="text-xs sm:text-sm text-[#777F79] mt-1.5 max-w-xl leading-relaxed">
-            Manage your personal narrative, projects, and digital diary. All updates directly reflect on the public site and are securely governed by PostgreSQL Row Level Security.
+            Manage your personal narrative, project case studies, certifications, and technical articles. All updates directly reflect on the public site and are securely governed by PostgreSQL Row Level Security.
           </p>
         </div>
 
@@ -89,11 +89,18 @@ export const AdminOverview: React.FC = () => {
             <span>New Project</span>
           </Link>
           <Link
+            to="/admin/certificates"
+            className="inline-flex items-center gap-1.5 text-xs font-medium bg-[#F7F8F7] text-[#202520] border border-[#E8ECE9] px-3.5 py-2 rounded-editorial hover:bg-[#E8ECE9] transition-colors"
+          >
+            <PlusCircle className="w-3.5 h-3.5" />
+            <span>Add Certification</span>
+          </Link>
+          <Link
             to="/admin/diary"
             className="inline-flex items-center gap-1.5 text-xs font-medium bg-[#EBF3EF] text-[#43866A] border border-[#D1DFD8] px-3.5 py-2 rounded-editorial hover:bg-[#DDF0E6] transition-colors"
           >
             <PlusCircle className="w-3.5 h-3.5" />
-            <span>New Diary Entry</span>
+            <span>New Article</span>
           </Link>
         </div>
       </div>
@@ -192,7 +199,28 @@ export const AdminOverview: React.FC = () => {
               to="/admin/homepage"
               className="flex items-center justify-between p-2.5 rounded-editorial border border-[#E8ECE9] hover:border-[#43866A] hover:bg-[#F7F8F7] transition-colors"
             >
-              <span className="font-medium text-[#202520]">Homepage & Hero Content</span>
+              <span className="font-medium text-[#202520]">Single-Screen Hero & Focus</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#777F79]" />
+            </Link>
+            <Link
+              to="/admin/projects"
+              className="flex items-center justify-between p-2.5 rounded-editorial border border-[#E8ECE9] hover:border-[#43866A] hover:bg-[#F7F8F7] transition-colors"
+            >
+              <span className="font-medium text-[#202520]">Projects & Case Studies</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#777F79]" />
+            </Link>
+            <Link
+              to="/admin/certificates"
+              className="flex items-center justify-between p-2.5 rounded-editorial border border-[#E8ECE9] hover:border-[#43866A] hover:bg-[#F7F8F7] transition-colors"
+            >
+              <span className="font-medium text-[#202520]">Certifications & Proofs</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#777F79]" />
+            </Link>
+            <Link
+              to="/admin/diary"
+              className="flex items-center justify-between p-2.5 rounded-editorial border border-[#E8ECE9] hover:border-[#43866A] hover:bg-[#F7F8F7] transition-colors"
+            >
+              <span className="font-medium text-[#202520]">Articles & Digital Diary</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-[#777F79]" />
             </Link>
             <Link
@@ -200,13 +228,6 @@ export const AdminOverview: React.FC = () => {
               className="flex items-center justify-between p-2.5 rounded-editorial border border-[#E8ECE9] hover:border-[#43866A] hover:bg-[#F7F8F7] transition-colors"
             >
               <span className="font-medium text-[#202520]">About, Education & Skills</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-[#777F79]" />
-            </Link>
-            <Link
-              to="/admin/journey"
-              className="flex items-center justify-between p-2.5 rounded-editorial border border-[#E8ECE9] hover:border-[#43866A] hover:bg-[#F7F8F7] transition-colors"
-            >
-              <span className="font-medium text-[#202520]">Journey Milestones & Hackathons</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-[#777F79]" />
             </Link>
             <Link
@@ -220,7 +241,7 @@ export const AdminOverview: React.FC = () => {
               to="/admin/settings"
               className="flex items-center justify-between p-2.5 rounded-editorial border border-[#E8ECE9] hover:border-[#43866A] hover:bg-[#F7F8F7] transition-colors"
             >
-              <span className="font-medium text-[#202520]">SEO, Tagline & Accent Color</span>
+              <span className="font-medium text-[#202520]">SEO, Tagline & Branding</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-[#777F79]" />
             </Link>
           </div>

@@ -12,11 +12,9 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { label: 'Home', path: '/' },
   { label: 'About', path: '/about' },
-  { label: 'Journey', path: '/journey' },
   { label: 'Projects', path: '/projects' },
-  { label: 'Certificates', path: '/certificates' },
-  { label: 'Diary', path: '/diary' },
-  { label: 'Gallery', path: '/gallery' },
+  { label: 'Certifications', path: '/certificates' },
+  { label: 'Articles', path: '/diary' },
   { label: 'Contact', path: '/contact' },
 ];
 

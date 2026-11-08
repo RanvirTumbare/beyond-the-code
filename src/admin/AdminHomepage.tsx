@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import {
+  Save,
+  Sparkles,
+  ExternalLink,
+  MapPin,
+  ArrowRight,
+  Monitor,
+  ChevronDown,
+  ChevronUp,
   ArrowUp,
   ArrowDown,
+  Edit2,
   Eye,
   EyeOff,
-  Edit2,
-  Save,
-  CheckCircle2,
-  Layers,
-  Sparkles,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -18,6 +22,7 @@ import { ImageUploader } from '@/admin/components/ImageUploader';
 import { useHomeContent } from '@/hooks/useHomeContent';
 import { useToast } from '@/contexts/ToastContext';
 import { ExploreCard } from '@/lib/types';
+import { Link } from 'react-router-dom';
 
 export const AdminHomepage: React.FC = () => {
   const {
@@ -31,6 +36,7 @@ export const AdminHomepage: React.FC = () => {
 
   const [formData, setFormData] = useState(content);
   const [isSaving, setIsSaving] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   // Card Edit Modal state
   const [editingCard, setEditingCard] = useState<ExploreCard | null>(null);
@@ -46,7 +52,7 @@ export const AdminHomepage: React.FC = () => {
     const res = await updateHomeContent(formData);
     setIsSaving(false);
     if (res.success) {
-      success('Homepage hero and section toggles updated successfully.');
+      success('Homepage hero and focus status updated successfully.');
     } else {
       toastError(res.error || 'Failed to update homepage content.');
     }
@@ -94,24 +100,124 @@ export const AdminHomepage: React.FC = () => {
   return (
     <div className="space-y-8 animate-fade-up">
       {/* Page Header */}
-      <div>
-        <span className="text-xs font-semibold uppercase tracking-wider text-[#43866A]">
-          Page Content Manager
-        </span>
-        <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#202520]">
-          Homepage & Hero Settings
-        </h1>
-        <p className="text-xs sm:text-sm text-[#777F79] mt-1">
-          Customize the hero greeting, portrait photo, focus status, and section visibility.
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#43866A] inline-flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5" />
+            Homepage Studio
+          </span>
+          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#202520]">
+            Single-Screen Hero & Focus
+          </h1>
+          <p className="text-xs sm:text-sm text-[#777F79] mt-1">
+            Customize the live hero greeting, headline, portrait photo, and floating status card displayed on the single-screen home view.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Link
+            to="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-[#43866A] bg-[#EBF3EF] border border-[#D1DFD8] px-3.5 py-2 rounded-editorial hover:bg-[#DDF0E6] transition-colors"
+          >
+            <span>Preview Live Homepage</span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </Link>
+        </div>
       </div>
 
-      {/* Main Form */}
+      {/* Status Banner */}
+      <div className="bg-[#EBF3EF]/70 border border-[#D1DFD8] rounded-editorial p-4 flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-[#43866A] text-white flex items-center justify-center shrink-0">
+            <Monitor className="w-4 h-4" />
+          </div>
+          <div>
+            <p className="text-xs font-semibold text-[#202520]">
+              Active Layout: Single-Screen Editorial Hero
+            </p>
+            <p className="text-[11px] text-[#585F5A]">
+              The public homepage is locked to a non-scrollable viewport featuring the hero, your portrait with live status, and the solitary "View My Work" action.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Live Preview Box */}
+      <div className="bg-white border border-[#E8ECE9] rounded-editorial p-6 shadow-subtle space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-[#E8ECE9]">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#585F5A]">
+            Live Visual Preview
+          </span>
+          <span className="text-[11px] text-[#777F79] italic">
+            Updates in real-time as you type
+          </span>
+        </div>
+
+        <div className="bg-[#F7F8F7] border border-[#E8ECE9] rounded-editorial p-6 sm:p-8">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            {/* Preview Left: Copy */}
+            <div className="md:col-span-7 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EBF3EF] border border-[#D1DFD8] text-xs font-semibold text-[#43866A]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#43866A] animate-pulse" />
+                <span>{formData.hero_greeting || 'Hello, I am Ranvir'}</span>
+              </div>
+
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#202520] tracking-tight leading-snug">
+                {formData.hero_heading || 'Exploring Technology. Building My Journey.'}
+              </h2>
+
+              <p className="text-xs sm:text-sm text-[#777F79] leading-relaxed line-clamp-3">
+                {formData.hero_intro || 'A Computer Engineering student fascinated by how secure code and enterprise data architectures shape resilient real-world systems.'}
+              </p>
+
+              <div className="pt-1">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-editorial bg-[#202520] text-white text-xs font-medium shadow-sm">
+                  <span>View My Work</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </div>
+              </div>
+            </div>
+
+            {/* Preview Right: Photo & Status Card */}
+            <div className="md:col-span-5 flex justify-center">
+              <div className="relative w-full max-w-[220px]">
+                <div className="aspect-[4/5] rounded-editorial overflow-hidden border border-[#E8ECE9] shadow-sm bg-white">
+                  <img
+                    src={
+                      formData.hero_image_url ||
+                      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80'
+                    }
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                <div className="absolute -bottom-3 -left-3 bg-white/95 backdrop-blur-md border border-[#E8ECE9] rounded-editorial p-2.5 shadow-modal max-w-[190px]">
+                  <div className="flex items-center gap-1 text-[9px] font-semibold uppercase tracking-wider text-[#43866A] mb-0.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#43866A]" />
+                    <span>Current Focus</span>
+                  </div>
+                  <p className="text-[10px] font-medium text-[#202520] leading-tight line-clamp-2">
+                    {formData.status_text || 'Exploring SAP Security & Full-Stack Systems'}
+                  </p>
+                  <div className="mt-1 pt-1 border-t border-[#E8ECE9] flex items-center gap-1 text-[9px] text-[#777F79]">
+                    <MapPin className="w-2.5 h-2.5 text-[#43866A]" />
+                    <span>{formData.location_label || 'Mumbai, India'}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Editor Form */}
       <form onSubmit={handleHeroSave} className="space-y-6">
-        {/* Section 1: Hero Content */}
-        <div className="bg-white border border-[#E8ECE9] rounded-editorial p-6 shadow-subtle space-y-4">
+        <div className="bg-white border border-[#E8ECE9] rounded-editorial p-6 shadow-subtle space-y-5">
           <h2 className="font-serif text-lg font-semibold text-[#202520] pb-2 border-b border-[#E8ECE9]">
-            Hero Headline & Copy
+            Hero Content & Status Settings
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -120,13 +226,15 @@ export const AdminHomepage: React.FC = () => {
               value={formData.hero_greeting}
               onChange={(e) => setFormData({ ...formData, hero_greeting: e.target.value })}
               placeholder="Hello, I am Ranvir"
+              helperText="The small green badge displayed above your main heading."
               required
             />
             <Input
-              label="Hero Heading (Serif)"
+              label="Hero Heading (Serif Font)"
               value={formData.hero_heading}
               onChange={(e) => setFormData({ ...formData, hero_heading: e.target.value })}
               placeholder="Exploring Technology. Building My Journey."
+              helperText="The bold statement headline introducing your work."
               required
             />
           </div>
@@ -136,6 +244,7 @@ export const AdminHomepage: React.FC = () => {
             value={formData.hero_intro}
             onChange={(e) => setFormData({ ...formData, hero_intro: e.target.value })}
             rows={3}
+            helperText="A concise summary of your focus areas, interests, and engineering passion."
             required
           />
 
@@ -150,92 +259,26 @@ export const AdminHomepage: React.FC = () => {
 
             <div className="space-y-4">
               <Input
-                label="Floating Status Text"
+                label="Floating Status Text (Current Focus)"
                 value={formData.status_text}
                 onChange={(e) => setFormData({ ...formData, status_text: e.target.value })}
                 placeholder="Exploring SAP Security & Full-Stack Systems"
-                helperText="Shown in the floating card over your portrait photo."
+                helperText="Displayed in the floating card anchored over your portrait photo."
+                required
               />
               <Input
                 label="Location Label"
                 value={formData.location_label}
                 onChange={(e) => setFormData({ ...formData, location_label: e.target.value })}
                 placeholder="Mumbai, India"
-              />
-              <Textarea
-                label="Closing Quote"
-                value={formData.closing_quote}
-                onChange={(e) => setFormData({ ...formData, closing_quote: e.target.value })}
-                rows={2}
-                helperText="Appears in the closing section at the bottom of the homepage."
+                helperText="Geographic location shown next to the pin icon."
+                required
               />
             </div>
           </div>
         </div>
 
-        {/* Section 2: Section Visibility Toggles */}
-        <div className="bg-white border border-[#E8ECE9] rounded-editorial p-6 shadow-subtle space-y-4">
-          <h2 className="font-serif text-lg font-semibold text-[#202520] pb-2 border-b border-[#E8ECE9]">
-            Section Visibility Toggles
-          </h2>
-          <p className="text-xs text-[#777F79]">
-            Turn entire homepage sections on or off with a single click.
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-            <label className="flex items-center justify-between p-3 border border-[#E8ECE9] rounded-editorial bg-[#F7F8F7]/50 cursor-pointer">
-              <span className="text-xs font-medium text-[#202520]">
-                "What I Explore" Section
-              </span>
-              <input
-                type="checkbox"
-                checked={formData.show_explore}
-                onChange={(e) => setFormData({ ...formData, show_explore: e.target.checked })}
-                className="w-4 h-4 accent-[#43866A]"
-              />
-            </label>
-
-            <label className="flex items-center justify-between p-3 border border-[#E8ECE9] rounded-editorial bg-[#F7F8F7]/50 cursor-pointer">
-              <span className="text-xs font-medium text-[#202520]">
-                "Featured Projects" Section
-              </span>
-              <input
-                type="checkbox"
-                checked={formData.show_projects}
-                onChange={(e) => setFormData({ ...formData, show_projects: e.target.checked })}
-                className="w-4 h-4 accent-[#43866A]"
-              />
-            </label>
-
-            <label className="flex items-center justify-between p-3 border border-[#E8ECE9] rounded-editorial bg-[#F7F8F7]/50 cursor-pointer">
-              <span className="text-xs font-medium text-[#202520]">
-                "Recent Diary Notes" Section
-              </span>
-              <input
-                type="checkbox"
-                checked={formData.show_recent}
-                onChange={(e) => setFormData({ ...formData, show_recent: e.target.checked })}
-                className="w-4 h-4 accent-[#43866A]"
-              />
-            </label>
-
-            <label className="flex items-center justify-between p-3 border border-[#E8ECE9] rounded-editorial bg-[#F7F8F7]/50 cursor-pointer">
-              <span className="text-xs font-medium text-[#202520]">
-                "Certificates Strip" Section
-              </span>
-              <input
-                type="checkbox"
-                checked={formData.show_certificates}
-                onChange={(e) =>
-                  setFormData({ ...formData, show_certificates: e.target.checked })
-                }
-                className="w-4 h-4 accent-[#43866A]"
-              />
-            </label>
-          </div>
-        </div>
-
-        {/* Submit Bar */}
+        {/* Action Save Bar */}
         <div className="flex justify-end">
           <Button
             type="submit"
@@ -244,104 +287,115 @@ export const AdminHomepage: React.FC = () => {
             isLoading={isSaving}
             leftIcon={<Save className="w-4 h-4" />}
           >
-            Save Homepage Settings
+            Save Homepage Hero
           </Button>
+        </div>
+
+        {/* Collapsible Advanced / Archival Content */}
+        <div className="bg-white border border-[#E8ECE9] rounded-editorial overflow-hidden shadow-subtle">
+          <button
+            type="button"
+            onClick={() => setShowAdvanced(!showAdvanced)}
+            className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-[#F7F8F7] transition-colors"
+          >
+            <div>
+              <p className="text-xs font-semibold text-[#202520]">
+                Extended Settings & Archive Cards
+              </p>
+              <p className="text-[11px] text-[#777F79]">
+                Closing quote, explore cards, and legacy section toggles.
+              </p>
+            </div>
+            {showAdvanced ? (
+              <ChevronUp className="w-4 h-4 text-[#777F79]" />
+            ) : (
+              <ChevronDown className="w-4 h-4 text-[#777F79]" />
+            )}
+          </button>
+
+          {showAdvanced && (
+            <div className="p-6 border-t border-[#E8ECE9] space-y-6">
+              <Textarea
+                label="Closing Quote"
+                value={formData.closing_quote || ''}
+                onChange={(e) => setFormData({ ...formData, closing_quote: e.target.value })}
+                rows={2}
+                helperText="Reserved for multi-section layouts."
+              />
+
+              <div className="pt-4 border-t border-[#E8ECE9]">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-[#585F5A] mb-3">
+                  Explore Cards Archive ({exploreCards.length})
+                </h3>
+                <div className="space-y-2">
+                  {exploreCards.map((card, idx) => (
+                    <div
+                      key={card.id}
+                      className="flex items-center justify-between p-3 border border-[#E8ECE9] rounded-editorial bg-[#F7F8F7]/60"
+                    >
+                      <div>
+                        <p className="text-xs font-medium text-[#202520]">{card.title}</p>
+                        <p className="text-[11px] text-[#777F79] line-clamp-1">
+                          {card.description}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          onClick={() => handleMoveCard(idx, 'up')}
+                          disabled={idx === 0}
+                          aria-label="Move up"
+                          className="p-1 text-[#777F79] hover:text-[#202520] disabled:opacity-30"
+                        >
+                          <ArrowUp className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleMoveCard(idx, 'down')}
+                          disabled={idx === exploreCards.length - 1}
+                          aria-label="Move down"
+                          className="p-1 text-[#777F79] hover:text-[#202520] disabled:opacity-30"
+                        >
+                          <ArrowDown className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleToggleCardVisibility(card)}
+                          aria-label="Toggle visibility"
+                          className="p-1 text-[#777F79] hover:text-[#202520]"
+                        >
+                          {card.visible ? (
+                            <Eye className="w-3.5 h-3.5 text-[#43866A]" />
+                          ) : (
+                            <EyeOff className="w-3.5 h-3.5 text-[#9CA39E]" />
+                          )}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setEditingCard(card)}
+                          aria-label="Edit card"
+                          className="p-1 text-[#777F79] hover:text-[#202520]"
+                        >
+                          <Edit2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </form>
 
-      {/* Section 3: Explore Cards Reordering & Customization */}
-      <div className="bg-white border border-[#E8ECE9] rounded-editorial p-6 shadow-subtle space-y-4">
-        <div className="flex items-center justify-between pb-2 border-b border-[#E8ECE9]">
-          <div>
-            <h2 className="font-serif text-lg font-semibold text-[#202520]">
-              "What I Explore" Cards
-            </h2>
-            <p className="text-xs text-[#777F79]">
-              Reorder cards using up/down arrows or toggle visibility.
-            </p>
-          </div>
-          <span className="text-xs font-medium text-[#43866A] bg-[#EBF3EF] px-2.5 py-1 rounded-full">
-            {exploreCards.filter((c) => c.visible).length} / {exploreCards.length} Visible
-          </span>
-        </div>
-
-        <div className="space-y-2">
-          {exploreCards.map((card, idx) => (
-            <div
-              key={card.id}
-              className={`flex items-center justify-between p-3.5 border rounded-editorial transition-colors ${
-                card.visible
-                  ? 'bg-white border-[#E8ECE9]'
-                  : 'bg-[#F7F8F7] border-dashed border-[#D5DDD8] opacity-60'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-mono font-bold text-[#777F79] w-5">
-                  #{idx + 1}
-                </span>
-                <div>
-                  <h4 className="text-xs sm:text-sm font-semibold text-[#202520]">
-                    {card.title}
-                  </h4>
-                  <p className="text-[11px] text-[#777F79] line-clamp-1 max-w-md">
-                    {card.description}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-1.5">
-                {/* Move Up */}
-                <button
-                  type="button"
-                  disabled={idx === 0}
-                  onClick={() => handleMoveCard(idx, 'up')}
-                  className="p-1 text-[#777F79] hover:text-[#202520] disabled:opacity-20"
-                  aria-label="Move card up"
-                >
-                  <ArrowUp className="w-4 h-4" />
-                </button>
-                {/* Move Down */}
-                <button
-                  type="button"
-                  disabled={idx === exploreCards.length - 1}
-                  onClick={() => handleMoveCard(idx, 'down')}
-                  className="p-1 text-[#777F79] hover:text-[#202520] disabled:opacity-20"
-                  aria-label="Move card down"
-                >
-                  <ArrowDown className="w-4 h-4" />
-                </button>
-                {/* Toggle Visibility */}
-                <button
-                  type="button"
-                  onClick={() => handleToggleCardVisibility(card)}
-                  title={card.visible ? 'Hide from public view' : 'Show on homepage'}
-                  className="p-1.5 rounded hover:bg-[#EFF2F0] text-[#585F5A]"
-                >
-                  {card.visible ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-                </button>
-                {/* Edit Modal */}
-                <button
-                  type="button"
-                  onClick={() => setEditingCard(card)}
-                  title="Edit details"
-                  className="p-1.5 rounded hover:bg-[#EBF3EF] text-[#43866A]"
-                >
-                  <Edit2 className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Card Edit Modal */}
-      <Modal
-        isOpen={Boolean(editingCard)}
-        onClose={() => setEditingCard(null)}
-        title="Edit Explore Card"
-        subtitle="Update the title, description, and icon."
-      >
-        {editingCard && (
+      {editingCard && (
+        <Modal
+          isOpen={true}
+          onClose={() => setEditingCard(null)}
+          title="Edit Explore Card"
+          subtitle="Update card title, description, and icon name."
+        >
           <form onSubmit={handleSaveCardModal} className="space-y-4">
             <Input
               label="Card Title"
@@ -350,7 +404,7 @@ export const AdminHomepage: React.FC = () => {
               required
             />
             <Textarea
-              label="Description"
+              label="Card Description"
               value={editingCard.description}
               onChange={(e) => setEditingCard({ ...editingCard, description: e.target.value })}
               rows={3}
@@ -360,10 +414,10 @@ export const AdminHomepage: React.FC = () => {
               label="Lucide Icon Name"
               value={editingCard.icon}
               onChange={(e) => setEditingCard({ ...editingCard, icon: e.target.value })}
-              helperText="Common icons: Shield, Layers, BarChart3, Code2, Sparkles, Database, Terminal."
+              helperText="e.g. ShieldCheck, Database, BarChart3, Code2"
               required
             />
-            <div className="flex justify-end gap-3 pt-4 border-t border-[#E8ECE9]">
+            <div className="flex justify-end gap-2 pt-2">
               <Button
                 type="button"
                 variant="outline"
@@ -377,9 +431,8 @@ export const AdminHomepage: React.FC = () => {
               </Button>
             </div>
           </form>
-        )}
-      </Modal>
+        </Modal>
+      )}
     </div>
   );
 };
-

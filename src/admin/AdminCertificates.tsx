@@ -184,7 +184,7 @@ export const AdminCertificates: React.FC = () => {
           onClick={handleOpenCreate}
           leftIcon={<Plus className="w-4 h-4" />}
         >
-          Add Certificate
+          Add Certification
         </Button>
       </div>
 
@@ -192,19 +192,19 @@ export const AdminCertificates: React.FC = () => {
       <DataTable
         data={certificates}
         columns={columns}
-        searchPlaceholder="Search certificates..."
+        searchPlaceholder="Search certifications..."
         isLoading={loading}
         onEdit={handleOpenEdit}
         onDelete={(c) => setCertToDelete(c)}
         onCreateNew={handleOpenCreate}
-        createLabel="Add Certificate"
+        createLabel="Add Certification"
       />
 
       {/* Editor Modal */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={editingId ? 'Edit Certificate' : 'Add New Certificate'}
+        title={editingId ? 'Edit Certification' : 'Add New Certification'}
         subtitle="Upload document image/PDF, assign skill tags, and enter verification links."
         maxWidth="2xl"
       >

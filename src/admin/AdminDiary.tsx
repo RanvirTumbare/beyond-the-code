@@ -179,10 +179,10 @@ export const AdminDiary: React.FC = () => {
             Editorial Journal
           </span>
           <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#202520]">
-            Digital Diary Entries
+            Articles & Digital Diary
           </h1>
           <p className="text-xs sm:text-sm text-[#777F79] mt-1">
-            Author and edit long-form reflections, learning logs, and letters to your future self.
+            Author and publish technical articles, reflections, learning logs, and letters to your future self.
           </p>
         </div>
         <Button
@@ -191,7 +191,7 @@ export const AdminDiary: React.FC = () => {
           onClick={handleOpenCreate}
           leftIcon={<Plus className="w-4 h-4" />}
         >
-          New Diary Entry
+          New Article
         </Button>
       </div>
 
@@ -199,19 +199,19 @@ export const AdminDiary: React.FC = () => {
       <DataTable
         data={posts}
         columns={columns}
-        searchPlaceholder="Search diary entries..."
+        searchPlaceholder="Search articles..."
         isLoading={loading}
         onEdit={handleOpenEdit}
         onDelete={(p) => setPostToDelete(p)}
         onCreateNew={handleOpenCreate}
-        createLabel="New Diary Entry"
+        createLabel="New Article"
       />
 
       {/* Editor Modal */}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={editingId ? 'Edit Diary Entry' : 'Compose Diary Entry'}
+        title={editingId ? 'Edit Article' : 'Compose New Article'}
         subtitle="Write Markdown content with live preview, set tags, and manage publication."
         maxWidth="4xl"
       >

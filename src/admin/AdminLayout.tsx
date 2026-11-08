@@ -44,19 +44,19 @@ export const AdminLayout: React.FC = () => {
 
   const navItems: SidebarItem[] = [
     { label: 'Overview', path: '/admin', icon: LayoutDashboard },
-    { label: 'Homepage', path: '/admin/homepage', icon: Home },
+    { label: 'Homepage Hero', path: '/admin/homepage', icon: Home },
     { label: 'About & Skills', path: '/admin/about', icon: User },
-    { label: 'Journey', path: '/admin/journey', icon: Milestone },
     { label: 'Projects', path: '/admin/projects', icon: Briefcase },
-    { label: 'Certificates', path: '/admin/certificates', icon: Award },
-    { label: 'Diary', path: '/admin/diary', icon: BookOpen },
-    { label: 'Gallery', path: '/admin/gallery', icon: Image },
+    { label: 'Certifications', path: '/admin/certificates', icon: Award },
+    { label: 'Articles', path: '/admin/diary', icon: BookOpen },
     {
       label: 'Messages',
       path: '/admin/messages',
       icon: Mail,
       badge: unreadCount > 0 ? unreadCount : undefined,
     },
+    { label: 'Journey Timeline', path: '/admin/journey', icon: Milestone },
+    { label: 'Media Gallery', path: '/admin/gallery', icon: Image },
     { label: 'Resume & Profile', path: '/admin/profile', icon: FileText },
     { label: 'Settings', path: '/admin/settings', icon: Settings },
   ];

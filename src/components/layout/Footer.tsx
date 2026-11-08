@@ -96,13 +96,8 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/journey" className="text-[#777F79] hover:text-[#202520] transition-colors">
-                  Journey Timeline
-                </Link>
-              </li>
-              <li>
                 <Link to="/projects" className="text-[#777F79] hover:text-[#202520] transition-colors">
-                  Project Case Studies
+                  Projects
                 </Link>
               </li>
             </ul>
@@ -111,7 +106,7 @@ export const Footer: React.FC = () => {
           {/* Column 3: Exploration & Journal */}
           <div className="space-y-3">
             <h4 className="text-xs font-semibold uppercase tracking-wider text-[#202520]">
-              Journal & Proof
+              Credentials & Writing
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
@@ -121,17 +116,12 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/diary" className="text-[#777F79] hover:text-[#202520] transition-colors">
-                  Digital Diary
-                </Link>
-              </li>
-              <li>
-                <Link to="/gallery" className="text-[#777F79] hover:text-[#202520] transition-colors">
-                  Visual Gallery
+                  Articles & Diary
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="text-[#777F79] hover:text-[#202520] transition-colors">
-                  Get in Touch
+                  Contact
                 </Link>
               </li>
             </ul>

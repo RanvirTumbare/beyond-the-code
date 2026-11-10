@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
   ArrowRight,
   MapPin,
@@ -7,6 +8,7 @@ import {
   Github,
   Mail,
   Globe,
+  Sparkles,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { PageTransition } from '@/components/layout/PageTransition';
@@ -19,6 +21,69 @@ export const Home: React.FC = () => {
   const { settings } = useSiteSettings();
   const currentYear = new Date().getFullYear();
 
+  // End-of-page interactive light effect state
+  const [isAtEnd, setIsAtEnd] = useState(false);
+  const [bounceY, setBounceY] = useState(0);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const triggerEndEffect = (strength = 6) => {
+    setIsAtEnd(true);
+    setBounceY(-Math.min(strength, 8)); // Subtle elastic lift
+
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    // Spring back quickly
+    setTimeout(() => {
+      setBounceY(0);
+    }, 160);
+
+    // Fade out light effect smoothly after 1.4s
+    timeoutRef.current = setTimeout(() => {
+      setIsAtEnd(false);
+    }, 1400);
+  };
+
+  useEffect(() => {
+    // Detect mouse wheel scroll down
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY > 0) {
+        triggerEndEffect(Math.min(Math.abs(e.deltaY) * 0.08, 8));
+      }
+    };
+
+    // Detect touch swipe up (scroll down intent)
+    let touchStartY = 0;
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+    const handleTouchMove = (e: TouchEvent) => {
+      const diff = touchStartY - e.touches[0].clientY;
+      if (diff > 12) {
+        triggerEndEffect(6);
+      }
+    };
+
+    // Detect keyboard down arrows
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (['ArrowDown', 'PageDown', ' '].includes(e.key)) {
+        triggerEndEffect(7);
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('keydown', handleKeyDown);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   return (
     <PageTransition>
       <Helmet>
@@ -27,10 +92,14 @@ export const Home: React.FC = () => {
         {settings.og_image_url && <meta property="og:image" content={settings.og_image_url} />}
       </Helmet>
 
-      {/* Single Non-Scrollable Viewport Container */}
-      <div className="w-full min-h-[calc(100vh-69px)] lg:h-[calc(100vh-69px)] flex flex-col justify-between bg-white lg:overflow-hidden">
-        {/* Main Hero Centerpiece */}
-        <div className="flex-1 flex items-center max-w-editorial w-full mx-auto px-4 sm:px-6 md:px-8 py-8 lg:py-0">
+      {/* Single Non-Scrollable Viewport Container with Relative Anchor for Light Effects */}
+      <div className="relative w-full min-h-[calc(100vh-69px)] lg:h-[calc(100vh-69px)] flex flex-col justify-between bg-white lg:overflow-hidden select-none">
+        {/* Main Hero Centerpiece with Elastic Spring Motion on Scroll */}
+        <motion.div
+          animate={{ y: bounceY }}
+          transition={{ type: 'spring', stiffness: 450, damping: 30 }}
+          className="flex-1 flex items-center max-w-editorial w-full mx-auto px-4 sm:px-6 md:px-8 py-8 lg:py-0 select-text z-10"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center w-full">
             {/* Left Column: Headline, Bio & View My Work Button */}
             <div className="lg:col-span-7 space-y-6">
@@ -95,10 +164,55 @@ export const Home: React.FC = () => {
               </div>
             </div>
           </div>
+        </motion.div>
+
+        {/* Ambient Radial Green Light Bloom from Bottom (Brightens on Scroll Down) */}
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute -bottom-16 left-1/2 -translate-x-1/2 w-[90vw] max-w-4xl h-48 rounded-full bg-[#43866A]/20 blur-3xl transition-all duration-700 ease-out z-0 ${
+            isAtEnd ? 'opacity-100 scale-105' : 'opacity-20 scale-95'
+          }`}
+        />
+
+        {/* Floating "End of Page" Light Pill Indicator */}
+        <div
+          className={`absolute bottom-14 left-1/2 -translate-x-1/2 pointer-events-none transition-all duration-500 ease-out z-20 ${
+            isAtEnd
+              ? 'opacity-100 translate-y-0 scale-100'
+              : 'opacity-0 translate-y-3 scale-95'
+          }`}
+        >
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-[#D1DFD8] shadow-[0_4px_24px_rgba(67,134,106,0.22)] text-xs text-[#202520]">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#43866A] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#43866A]" />
+            </span>
+            <span className="font-serif italic text-xs text-[#585F5A]">
+              End of page
+            </span>
+            <span className="text-[#D1DFD8]">·</span>
+            <Link
+              to="/projects"
+              className="pointer-events-auto font-medium text-[#43866A] hover:underline flex items-center gap-1 text-xs"
+            >
+              <span>Explore Projects</span>
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+          </div>
         </div>
 
-        {/* Minimal Single-Screen Bottom Footer Bar */}
-        <div className="w-full border-t border-[#E8ECE9] bg-[#F7F8F7]/60 py-3">
+        {/* Minimal Single-Screen Bottom Footer Bar with Glowing Edge Light */}
+        <div className="relative w-full border-t border-[#E8ECE9] bg-[#F7F8F7]/70 backdrop-blur-xs py-3 z-10 select-text">
+          {/* Luminous Edge Line Light Effect */}
+          <div
+            aria-hidden="true"
+            className={`absolute -top-[1px] left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#43866A] to-transparent transition-all duration-500 ease-out ${
+              isAtEnd
+                ? 'opacity-100 shadow-[0_0_14px_rgba(67,134,106,0.85)] scale-x-100'
+                : 'opacity-30 shadow-none scale-x-75'
+            }`}
+          />
+
           <div className="max-w-editorial mx-auto px-4 sm:px-6 md:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#777F79] gap-3">
             <p>© {currentYear} Ranvir</p>
 

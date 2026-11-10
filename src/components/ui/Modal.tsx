@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
 export interface ModalProps {
@@ -42,7 +43,7 @@ export const Modal: React.FC<ModalProps> = ({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || typeof document === 'undefined') return null;
 
   const maxWidthClasses = {
     sm: 'max-w-sm',
@@ -54,11 +55,11 @@ export const Modal: React.FC<ModalProps> = ({
     full: 'max-w-[95vw]',
   };
 
-  return (
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-hidden"
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-hidden"
     >
       {/* Backdrop */}
       <div
@@ -69,7 +70,8 @@ export const Modal: React.FC<ModalProps> = ({
 
       {/* Dialog Window */}
       <div
-        className={`relative w-full ${maxWidthClasses[maxWidth]} bg-white border border-[#E8ECE9] rounded-editorial shadow-modal z-10 overflow-hidden max-h-[85vh] sm:max-h-[88vh] flex flex-col animate-fade-in`}
+        style={{ maxHeight: 'min(88vh, calc(100vh - 48px))' }}
+        className={`relative w-full ${maxWidthClasses[maxWidth]} bg-white border border-[#E8ECE9] rounded-editorial shadow-2xl z-10 overflow-hidden flex flex-col animate-fade-in`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header - Fixed & Always Visible */}
@@ -110,6 +112,7 @@ export const Modal: React.FC<ModalProps> = ({
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

@@ -262,8 +262,29 @@ export const AdminProjects: React.FC = () => {
         title={editingId ? 'Edit Project' : 'New Project'}
         subtitle="Fill in project details below."
         maxWidth="2xl"
+        footer={
+          <>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              form="project-modal-form"
+              variant="primary"
+              size="sm"
+              isLoading={isSaving}
+            >
+              Save Project
+            </Button>
+          </>
+        }
       >
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form id="project-modal-form" onSubmit={handleSubmit} className="space-y-4">
           {/* Phase & Status Settings */}
           <div className="p-3 bg-[#F7F8F7] border border-[#E8ECE9] rounded-editorial flex flex-wrap items-center justify-between gap-3">
             <DraftPublishedToggle status={status} onChange={setStatus} />
@@ -397,26 +418,6 @@ export const AdminProjects: React.FC = () => {
               onChange={(e) => setLiveUrl(e.target.value)}
               placeholder="https://app.example.com"
             />
-          </div>
-
-          {/* Sticky Bottom Actions */}
-          <div className="sticky -bottom-5 sm:-bottom-6 bg-white pt-3 pb-3 -mx-5 sm:-mx-6 px-5 sm:px-6 border-t border-[#E8ECE9] flex items-center justify-end gap-2 mt-4 z-10">
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => setIsModalOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              variant="primary"
-              size="sm"
-              isLoading={isSaving}
-            >
-              Save Project
-            </Button>
           </div>
         </form>
       </Modal>

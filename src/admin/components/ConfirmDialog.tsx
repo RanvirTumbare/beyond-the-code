@@ -27,7 +27,34 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
   isLoading = false,
 }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} maxWidth="sm" showCloseButton={!isLoading}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      maxWidth="sm"
+      showCloseButton={!isLoading}
+      footer={
+        <>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={onClose}
+            disabled={isLoading}
+          >
+            {cancelLabel}
+          </Button>
+          <Button
+            type="button"
+            variant={isDestructive ? 'danger' : 'primary'}
+            size="sm"
+            onClick={onConfirm}
+            isLoading={isLoading}
+          >
+            {confirmLabel}
+          </Button>
+        </>
+      }
+    >
       <div className="flex items-start gap-4">
         <div
           className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -44,27 +71,6 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             {message}
           </p>
         </div>
-      </div>
-
-      <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-[#E8ECE9]">
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={onClose}
-          disabled={isLoading}
-        >
-          {cancelLabel}
-        </Button>
-        <Button
-          type="button"
-          variant={isDestructive ? 'danger' : 'primary'}
-          size="sm"
-          onClick={onConfirm}
-          isLoading={isLoading}
-        >
-          {confirmLabel}
-        </Button>
       </div>
     </Modal>
   );

@@ -207,8 +207,29 @@ export const AdminCertificates: React.FC = () => {
         title={editingId ? 'Edit Certification' : 'Add New Certification'}
         subtitle="Upload document image/PDF, assign skill tags, and enter verification links."
         maxWidth="2xl"
+        footer={
+          <>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              form="cert-modal-form"
+              variant="primary"
+              size="sm"
+              isLoading={isSaving}
+            >
+              Save Certification
+            </Button>
+          </>
+        }
       >
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form id="cert-modal-form" onSubmit={handleSubmit} className="space-y-5">
           <DraftPublishedToggle status={status} onChange={setStatus} />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -290,20 +311,6 @@ export const AdminCertificates: React.FC = () => {
             placeholder="https://coursera.org/verify/..."
             helperText="Direct link where visitors can verify this credential."
           />
-
-          <div className="sticky -bottom-5 sm:-bottom-6 bg-white pt-3 pb-3 -mx-5 sm:-mx-6 px-5 sm:px-6 border-t border-[#E8ECE9] flex justify-end gap-2 mt-4 z-10">
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => setIsModalOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button type="submit" variant="primary" size="sm" isLoading={isSaving}>
-              Save Certification
-            </Button>
-          </div>
         </form>
       </Modal>
 

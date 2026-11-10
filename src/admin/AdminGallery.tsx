@@ -240,9 +240,30 @@ export const AdminGallery: React.FC = () => {
         title="Edit Gallery Asset"
         subtitle="Update captions, event context, and categorization."
         maxWidth="lg"
+        footer={
+          <>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              form="gallery-modal-form"
+              variant="primary"
+              size="sm"
+              isLoading={isSaving}
+            >
+              Save Details
+            </Button>
+          </>
+        }
       >
         {editingItem && (
-          <form onSubmit={handleSaveModal} className="space-y-4">
+          <form id="gallery-modal-form" onSubmit={handleSaveModal} className="space-y-4">
             <Input
               label="Caption / Description"
               value={editingItem.caption}
@@ -326,20 +347,6 @@ export const AdminGallery: React.FC = () => {
                   placeholder="https://www.youtube.com/watch?v=..."
                 />
               )}
-            </div>
-
-            <div className="sticky -bottom-5 sm:-bottom-6 bg-white pt-3 pb-3 -mx-5 sm:-mx-6 px-5 sm:px-6 border-t border-[#E8ECE9] flex justify-end gap-2 mt-4 z-10">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setIsModalOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" variant="primary" size="sm" isLoading={isSaving}>
-                Save Details
-              </Button>
             </div>
           </form>
         )}

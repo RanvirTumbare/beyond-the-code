@@ -57,13 +57,13 @@ export const AdminMessages: React.FC = () => {
       {/* Page Header */}
       <div>
         <span className="text-xs font-semibold uppercase tracking-wider text-[#43866A]">
-          Inquiries & Correspondence
+          Contact Inquiries
         </span>
         <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#202520]">
-          Messages Inbox
+          Contact & Messages
         </h1>
         <p className="text-xs sm:text-sm text-[#777F79] mt-1">
-          Review incoming messages submitted via the public Contact form.
+          Review visitor inquiries and contact requests sent from the public Contact page.
         </p>
       </div>
 
@@ -164,22 +164,9 @@ export const AdminMessages: React.FC = () => {
         title={activeMessage?.subject}
         subtitle={`From: ${activeMessage?.name} <${activeMessage?.email}>`}
         maxWidth="lg"
-      >
-        {activeMessage && (
-          <div className="space-y-6">
-            <div className="p-3 bg-[#F7F8F7] border border-[#E8ECE9] rounded-editorial flex items-center justify-between text-xs text-[#777F79]">
-              <span className="flex items-center gap-1 font-mono">
-                <Calendar className="w-3.5 h-3.5 text-[#43866A]" />
-                {new Date(activeMessage.created_at).toLocaleString()}
-              </span>
-              <span>Direct Website Submission</span>
-            </div>
-
-            <div className="text-sm text-[#202520] whitespace-pre-wrap leading-relaxed p-2">
-              {activeMessage.message}
-            </div>
-
-            <div className="flex items-center justify-between pt-4 border-t border-[#E8ECE9]">
+        footer={
+          activeMessage && (
+            <div className="w-full flex items-center justify-between">
               <Button
                 type="button"
                 variant="outline"
@@ -193,7 +180,7 @@ export const AdminMessages: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setMessageToDelete(activeMessage)}
-                  className="p-2 text-rose-600 hover:bg-rose-50 rounded"
+                  className="p-1.5 text-rose-600 hover:bg-rose-50 rounded transition-colors"
                   title="Delete message"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -202,7 +189,6 @@ export const AdminMessages: React.FC = () => {
                   href={`mailto:${activeMessage.email}?subject=Re: ${encodeURIComponent(
                     activeMessage.subject
                   )}`}
-                  className="inline-flex"
                 >
                   <Button
                     variant="primary"
@@ -213,6 +199,22 @@ export const AdminMessages: React.FC = () => {
                   </Button>
                 </a>
               </div>
+            </div>
+          )
+        }
+      >
+        {activeMessage && (
+          <div className="space-y-4">
+            <div className="p-3 bg-[#F7F8F7] border border-[#E8ECE9] rounded-editorial flex items-center justify-between text-xs text-[#777F79]">
+              <span className="flex items-center gap-1 font-mono">
+                <Calendar className="w-3.5 h-3.5 text-[#43866A]" />
+                {new Date(activeMessage.created_at).toLocaleString()}
+              </span>
+              <span>Direct Website Submission</span>
+            </div>
+
+            <div className="text-sm text-[#202520] whitespace-pre-wrap leading-relaxed p-2">
+              {activeMessage.message}
             </div>
           </div>
         )}

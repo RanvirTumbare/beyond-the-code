@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { Loader2 } from 'lucide-react';
@@ -65,15 +65,18 @@ export const App: React.FC = () => {
         {/* Protected Admin Routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminOverview />} />
-            <Route path="homepage" element={<AdminHomepage />} />
+            <Route index element={<Navigate to="/admin/home" replace />} />
+            <Route path="home" element={<AdminHomepage />} />
+            <Route path="homepage" element={<Navigate to="/admin/home" replace />} />
             <Route path="about" element={<AdminAbout />} />
-            <Route path="journey" element={<AdminJourney />} />
             <Route path="projects" element={<AdminProjects />} />
             <Route path="certificates" element={<AdminCertificates />} />
-            <Route path="diary" element={<AdminDiary />} />
+            <Route path="articles" element={<AdminDiary />} />
+            <Route path="diary" element={<Navigate to="/admin/articles" replace />} />
+            <Route path="contact" element={<AdminMessages />} />
+            <Route path="messages" element={<Navigate to="/admin/contact" replace />} />
+            <Route path="journey" element={<AdminJourney />} />
             <Route path="gallery" element={<AdminGallery />} />
-            <Route path="messages" element={<AdminMessages />} />
             <Route path="profile" element={<AdminProfile />} />
             <Route path="settings" element={<AdminSettings />} />
           </Route>

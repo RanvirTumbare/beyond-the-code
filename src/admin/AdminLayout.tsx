@@ -43,22 +43,17 @@ export const AdminLayout: React.FC = () => {
   };
 
   const navItems: SidebarItem[] = [
-    { label: 'Overview', path: '/admin', icon: LayoutDashboard },
-    { label: 'Homepage Hero', path: '/admin/homepage', icon: Home },
-    { label: 'About & Skills', path: '/admin/about', icon: User },
+    { label: 'Home', path: '/admin/home', icon: Home },
+    { label: 'About', path: '/admin/about', icon: User },
     { label: 'Projects', path: '/admin/projects', icon: Briefcase },
     { label: 'Certifications', path: '/admin/certificates', icon: Award },
-    { label: 'Articles', path: '/admin/diary', icon: BookOpen },
+    { label: 'Articles', path: '/admin/articles', icon: BookOpen },
     {
-      label: 'Messages',
-      path: '/admin/messages',
+      label: 'Contact',
+      path: '/admin/contact',
       icon: Mail,
       badge: unreadCount > 0 ? unreadCount : undefined,
     },
-    { label: 'Journey Timeline', path: '/admin/journey', icon: Milestone },
-    { label: 'Media Gallery', path: '/admin/gallery', icon: Image },
-    { label: 'Resume & Profile', path: '/admin/profile', icon: FileText },
-    { label: 'Settings', path: '/admin/settings', icon: Settings },
   ];
 
   return (

@@ -198,8 +198,29 @@ export const AdminJourney: React.FC = () => {
         title={editingId ? 'Edit Journey Milestone' : 'Add New Milestone'}
         subtitle="Provide the narrative, date, category tags, and optional project links."
         maxWidth="2xl"
+        footer={
+          <>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              form="journey-modal-form"
+              variant="primary"
+              size="sm"
+              isLoading={isSaving}
+            >
+              Save Milestone
+            </Button>
+          </>
+        }
       >
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form id="journey-modal-form" onSubmit={handleSubmit} className="space-y-5">
           <DraftPublishedToggle status={status} onChange={setStatus} />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -302,25 +323,6 @@ export const AdminJourney: React.FC = () => {
                 Mark as Featured (Green timeline marker)
               </span>
             </label>
-          </div>
-
-          <div className="sticky -bottom-5 sm:-bottom-6 bg-white pt-3 pb-3 -mx-5 sm:-mx-6 px-5 sm:px-6 border-t border-[#E8ECE9] flex justify-end gap-2 mt-4 z-10">
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => setIsModalOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              variant="primary"
-              size="sm"
-              isLoading={isSaving}
-            >
-              Save Milestone
-            </Button>
           </div>
         </form>
       </Modal>

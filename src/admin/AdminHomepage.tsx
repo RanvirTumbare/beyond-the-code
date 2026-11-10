@@ -395,8 +395,28 @@ export const AdminHomepage: React.FC = () => {
           onClose={() => setEditingCard(null)}
           title="Edit Explore Card"
           subtitle="Update card title, description, and icon name."
+          footer={
+            <>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => setEditingCard(null)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                form="explore-card-form"
+                variant="primary"
+                size="sm"
+              >
+                Save Card
+              </Button>
+            </>
+          }
         >
-          <form onSubmit={handleSaveCardModal} className="space-y-4">
+          <form id="explore-card-form" onSubmit={handleSaveCardModal} className="space-y-4">
             <Input
               label="Card Title"
               value={editingCard.title}
@@ -417,19 +437,6 @@ export const AdminHomepage: React.FC = () => {
               helperText="e.g. ShieldCheck, Database, BarChart3, Code2"
               required
             />
-            <div className="sticky -bottom-5 sm:-bottom-6 bg-white pt-3 pb-3 -mx-5 sm:-mx-6 px-5 sm:px-6 border-t border-[#E8ECE9] flex justify-end gap-2 mt-4 z-10">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setEditingCard(null)}
-              >
-                Cancel
-              </Button>
-              <Button type="submit" variant="primary" size="sm">
-                Save Card
-              </Button>
-            </div>
           </form>
         </Modal>
       )}

@@ -328,7 +328,7 @@ export const AdminGallery: React.FC = () => {
               )}
             </div>
 
-            <div className="flex justify-end gap-3 pt-4 border-t border-[#E8ECE9]">
+            <div className="sticky -bottom-5 sm:-bottom-6 bg-white pt-3 pb-3 -mx-5 sm:-mx-6 px-5 sm:px-6 border-t border-[#E8ECE9] flex justify-end gap-2 mt-4 z-10">
               <Button
                 type="button"
                 variant="outline"

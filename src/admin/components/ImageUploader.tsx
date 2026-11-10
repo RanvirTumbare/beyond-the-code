@@ -168,21 +168,21 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
           onDragLeave={() => setIsDragging(false)}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
-          className={`border-2 border-dashed rounded-editorial p-6 text-center cursor-pointer transition-colors max-w-md ${
+          className={`border-2 border-dashed rounded-editorial p-4 text-center cursor-pointer transition-colors max-w-md ${
             isDragging
               ? 'border-[#43866A] bg-[#EBF3EF]/40'
               : 'border-[#D5DDD8] hover:border-[#43866A] bg-[#F7F8F7]/50'
           }`}
         >
           {isUploading ? (
-            <div className="flex flex-col items-center justify-center py-4">
-              <Loader2 className="w-6 h-6 animate-spin text-[#43866A] mb-2" />
+            <div className="flex flex-col items-center justify-center py-2">
+              <Loader2 className="w-5 h-5 animate-spin text-[#43866A] mb-1.5" />
               <p className="text-xs text-[#585F5A] font-medium">Optimizing & Uploading...</p>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center">
-              <div className="w-10 h-10 rounded-full bg-[#EBF3EF] text-[#43866A] flex items-center justify-center mb-2">
-                <UploadCloud className="w-5 h-5" />
+              <div className="w-8 h-8 rounded-full bg-[#EBF3EF] text-[#43866A] flex items-center justify-center mb-1.5">
+                <UploadCloud className="w-4 h-4" />
               </div>
               <p className="text-xs font-semibold text-[#202520]">
                 Click or drag & drop to upload

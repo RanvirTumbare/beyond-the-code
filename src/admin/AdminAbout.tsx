@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { ImageUploader } from '@/admin/components/ImageUploader';
 import { ConfirmDialog } from '@/admin/components/ConfirmDialog';
+import { CategorySelect } from '@/admin/components/CategorySelect';
 import { useAboutContent } from '@/hooks/useAboutContent';
 import { useToast } from '@/contexts/ToastContext';
 import { EducationItem, Skill } from '@/lib/types';
@@ -280,7 +281,7 @@ export const AdminAbout: React.FC = () => {
           onSubmit={handleAddSkill}
           className="p-4 border border-[#D1DFD8] bg-[#EBF3EF]/40 rounded-editorial grid grid-cols-1 sm:grid-cols-12 gap-3 items-end"
         >
-          <div className="sm:col-span-5">
+          <div className="sm:col-span-4">
             <Input
               label="Skill Name"
               value={newSkillName}
@@ -290,27 +291,25 @@ export const AdminAbout: React.FC = () => {
             />
           </div>
 
-          <div className="sm:col-span-3">
-            <label className="block text-xs font-medium text-[#202520] mb-1">
-              Category
-            </label>
-            <select
+          <div className="sm:col-span-4">
+            <CategorySelect
+              label="Category"
               value={newSkillCategory}
-              onChange={(e) =>
-                setNewSkillCategory(e.target.value as Skill['category'])
-              }
-              className="w-full bg-white text-xs px-3 py-2 border border-[#E8ECE9] rounded-editorial focus:outline-none focus:ring-1 focus:ring-[#43866A]"
-            >
-              <option value="Cybersecurity">Cybersecurity</option>
-              <option value="SAP / ERP">SAP / ERP</option>
-              <option value="Data Analytics">Data Analytics</option>
-              <option value="Web Development">Web Development</option>
-              <option value="Programming & Tools">Programming & Tools</option>
-            </select>
+              onChange={setNewSkillCategory}
+              defaultOptions={[
+                'Cybersecurity',
+                'SAP / ERP',
+                'Data Analytics',
+                'Web Development',
+                'Programming & Tools',
+              ]}
+              existingItems={skills}
+              placeholder="e.g. Artificial Intelligence, Cloud..."
+            />
           </div>
 
           <div className="sm:col-span-2">
-            <label className="block text-xs font-medium text-[#202520] mb-1">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-[#585F5A] mb-1.5">
               Level
             </label>
             <input

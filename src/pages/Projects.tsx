@@ -15,20 +15,23 @@ import { useProjects } from '@/hooks/useProjects';
 import { Helmet } from 'react-helmet-async';
 import { Project } from '@/lib/types';
 
-const CATEGORIES = [
-  'All',
-  'Cybersecurity',
-  'Web Development',
-  'Data Analytics',
-  'SAP / ERP',
-  'IoT',
-  'Other',
-];
-
 export const Projects: React.FC = () => {
   const { projects, loading } = useProjects();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+
+  const categories = useMemo(() => {
+    const defaultCats = [
+      'All',
+      'Cybersecurity',
+      'Web Development',
+      'Data Analytics',
+      'SAP / ERP',
+      'IoT',
+    ];
+    const projectCats = projects.map((p) => p.category).filter(Boolean);
+    return Array.from(new Set([...defaultCats, ...projectCats]));
+  }, [projects]);
 
   const filteredProjects = useMemo(() => {
     return projects.filter((p) => {
@@ -158,7 +161,7 @@ export const Projects: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
           {/* Category Chips */}
           <div className="flex flex-wrap items-center gap-1.5">
-            {CATEGORIES.map((cat) => (
+            {categories.map((cat) => (
               <button
                 key={cat}
                 type="button"

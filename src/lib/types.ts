@@ -73,7 +73,7 @@ export interface Skill {
   created_at: string;
   updated_at: string;
   name: string;
-  category: 'Cybersecurity' | 'SAP / ERP' | 'Data Analytics' | 'Web Development' | 'Programming & Tools';
+  category: string;
   level: string; // Text label: e.g. "Proficient", "Working Knowledge", "Exploring" - NO PERCENTAGES
   sort_order: number;
 }

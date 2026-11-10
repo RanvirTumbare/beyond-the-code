@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   GraduationCap,
@@ -24,13 +24,17 @@ export const About: React.FC = () => {
   const { about, skills } = useAboutContent();
   const { settings } = useSiteSettings();
 
-  const categories = [
-    'Cybersecurity',
-    'SAP / ERP',
-    'Data Analytics',
-    'Web Development',
-    'Programming & Tools',
-  ] as const;
+  const categories = useMemo(() => {
+    const defaultCats = [
+      'Cybersecurity',
+      'SAP / ERP',
+      'Data Analytics',
+      'Web Development',
+      'Programming & Tools',
+    ];
+    const skillCats = skills.map((s) => s.category).filter(Boolean);
+    return Array.from(new Set([...defaultCats, ...skillCats]));
+  }, [skills]);
 
   const categoryIcons: Record<string, React.ElementType> = {
     Cybersecurity: Shield,

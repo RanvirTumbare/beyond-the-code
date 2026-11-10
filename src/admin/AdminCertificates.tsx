@@ -7,6 +7,7 @@ import { DataTable, Column } from '@/admin/components/DataTable';
 import { ImageUploader } from '@/admin/components/ImageUploader';
 import { DraftPublishedToggle } from '@/admin/components/DraftPublishedToggle';
 import { ConfirmDialog } from '@/admin/components/ConfirmDialog';
+import { CategorySelect } from '@/admin/components/CategorySelect';
 import { useCertificates } from '@/hooks/useCertificates';
 import { useToast } from '@/contexts/ToastContext';
 import { Certificate, PublishStatus } from '@/lib/types';
@@ -250,22 +251,20 @@ export const AdminCertificates: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-[#585F5A] mb-1.5">
-                Category
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-white text-sm p-2.5 border border-[#E8ECE9] rounded-editorial focus:ring-2 focus:ring-[#43866A] focus:outline-none"
-              >
-                <option value="Cybersecurity">Cybersecurity</option>
-                <option value="SAP / ERP">SAP / ERP</option>
-                <option value="Data Analytics">Data Analytics</option>
-                <option value="Web Development">Web Development</option>
-                <option value="Cloud & Systems">Cloud & Systems</option>
-              </select>
-            </div>
+            <CategorySelect
+              label="Category"
+              value={category}
+              onChange={setCategory}
+              defaultOptions={[
+                'Cybersecurity',
+                'SAP / ERP',
+                'Data Analytics',
+                'Web Development',
+                'Cloud & Systems',
+              ]}
+              existingItems={certificates}
+              placeholder="e.g. Artificial Intelligence, DevOps, Networking..."
+            />
 
             <Input
               label="Completion Date"

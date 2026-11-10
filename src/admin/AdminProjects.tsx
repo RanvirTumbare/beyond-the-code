@@ -15,6 +15,7 @@ import { DataTable, Column } from '@/admin/components/DataTable';
 import { ImageUploader } from '@/admin/components/ImageUploader';
 import { DraftPublishedToggle } from '@/admin/components/DraftPublishedToggle';
 import { ConfirmDialog } from '@/admin/components/ConfirmDialog';
+import { CategorySelect } from '@/admin/components/CategorySelect';
 import { useProjects } from '@/hooks/useProjects';
 import { useToast } from '@/contexts/ToastContext';
 import { Project, PublishStatus } from '@/lib/types';
@@ -313,8 +314,8 @@ export const AdminProjects: React.FC = () => {
           </div>
 
           {/* Title & Category */}
-          <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
-            <div className="sm:col-span-8">
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-start">
+            <div className="sm:col-span-7">
               <Input
                 label="Project Title"
                 value={title}
@@ -323,22 +324,23 @@ export const AdminProjects: React.FC = () => {
                 required
               />
             </div>
-            <div className="sm:col-span-4">
-              <label className="block text-xs font-medium text-[#202520] mb-1">
-                Category
-              </label>
-              <select
+            <div className="sm:col-span-5">
+              <CategorySelect
+                label="Category"
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-white text-xs px-3 py-2 border border-[#E8ECE9] rounded-editorial focus:outline-none focus:ring-1 focus:ring-[#43866A]"
-              >
-                <option value="Cybersecurity">Cybersecurity</option>
-                <option value="Web Development">Web Development</option>
-                <option value="SAP / ERP">SAP / ERP</option>
-                <option value="Data Analytics">Data Analytics</option>
-                <option value="IoT">IoT</option>
-                <option value="Other">Other</option>
-              </select>
+                onChange={setCategory}
+                defaultOptions={[
+                  'Cybersecurity',
+                  'Web Development',
+                  'SAP / ERP',
+                  'Data Analytics',
+                  'IoT',
+                  'Cloud & Systems',
+                  'Other',
+                ]}
+                existingItems={projects}
+                placeholder="e.g. AI / Machine Learning, Blockchain..."
+              />
             </div>
           </div>
 

@@ -9,6 +9,7 @@ import { ImageUploader } from '@/admin/components/ImageUploader';
 import { MarkdownEditor } from '@/admin/components/MarkdownEditor';
 import { DraftPublishedToggle } from '@/admin/components/DraftPublishedToggle';
 import { ConfirmDialog } from '@/admin/components/ConfirmDialog';
+import { CategorySelect } from '@/admin/components/CategorySelect';
 import { useDiary } from '@/hooks/useDiary';
 import { useToast } from '@/contexts/ToastContext';
 import { DiaryPost, PublishStatus } from '@/lib/types';
@@ -257,23 +258,21 @@ export const AdminDiary: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-[#585F5A] mb-1.5">
-                Category
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-white text-sm p-2.5 border border-[#E8ECE9] rounded-editorial focus:ring-2 focus:ring-[#43866A] focus:outline-none"
-              >
-                <option value="Technology">Technology</option>
-                <option value="Learning Logs">Learning Logs</option>
-                <option value="College Life">College Life</option>
-                <option value="Hackathons">Hackathons</option>
-                <option value="Personal Growth">Personal Growth</option>
-                <option value="Experiences">Experiences</option>
-              </select>
-            </div>
+            <CategorySelect
+              label="Category"
+              value={category}
+              onChange={setCategory}
+              defaultOptions={[
+                'Technology',
+                'Learning Logs',
+                'College Life',
+                'Hackathons',
+                'Personal Growth',
+                'Experiences',
+              ]}
+              existingItems={posts}
+              placeholder="e.g. Research, Tutorial, Career..."
+            />
 
             <Input
               label="Publication Date"

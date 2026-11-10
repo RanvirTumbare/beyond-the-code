@@ -103,9 +103,8 @@ export const AdminLayout: React.FC = () => {
 
       {/* Sidebar Navigation */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-[#E8ECE9] flex flex-col transition-transform duration-300 lg:static lg:translate-x-0 ${
-          mobileSidebarOpen ? 'translate-x-0 shadow-modal' : '-translate-x-full'
-        }`}
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-[#E8ECE9] flex flex-col transition-transform duration-300 lg:static lg:translate-x-0 ${mobileSidebarOpen ? 'translate-x-0 shadow-modal' : '-translate-x-full'
+          }`}
       >
         {/* Brand / Logo */}
         <div className="p-6 border-b border-[#E8ECE9] flex items-center justify-between">
@@ -142,10 +141,9 @@ export const AdminLayout: React.FC = () => {
                 end={item.path === '/admin'}
                 onClick={() => setMobileSidebarOpen(false)}
                 className={({ isActive }) =>
-                  `flex items-center justify-between px-3.5 py-2.5 rounded-editorial text-xs sm:text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'bg-[#EBF3EF] text-[#43866A]'
-                      : 'text-[#585F5A] hover:bg-[#F7F8F7] hover:text-[#202520]'
+                  `flex items-center justify-between px-3.5 py-2.5 rounded-editorial text-xs sm:text-sm font-medium transition-colors ${isActive
+                    ? 'bg-[#EBF3EF] text-[#43866A]'
+                    : 'text-[#585F5A] hover:bg-[#F7F8F7] hover:text-[#202520]'
                   }`
                 }
               >

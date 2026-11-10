@@ -13,21 +13,25 @@ import { PageTransition } from '@/components/layout/PageTransition';
 import { useDiary } from '@/hooks/useDiary';
 import { Helmet } from 'react-helmet-async';
 
-const CATEGORIES = [
-  'All',
-  'Technology',
-  'Learning Logs',
-  'College Life',
-  'Hackathons',
-  'Personal Growth',
-  'Experiences',
-];
-
 export const Diary: React.FC = () => {
   const { posts } = useDiary();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
+
+  const categories = useMemo(() => {
+    const defaultCats = [
+      'All',
+      'Technology',
+      'Learning Logs',
+      'College Life',
+      'Hackathons',
+      'Personal Growth',
+      'Experiences',
+    ];
+    const postCats = posts.map((p) => p.category).filter(Boolean);
+    return Array.from(new Set([...defaultCats, ...postCats]));
+  }, [posts]);
 
   const filteredPosts = useMemo(() => {
     let list = posts.filter((p) => {
@@ -75,7 +79,7 @@ export const Diary: React.FC = () => {
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
           {/* Category Chips */}
           <div className="flex flex-wrap items-center gap-1.5">
-            {CATEGORIES.map((cat) => (
+            {categories.map((cat) => (
               <button
                 key={cat}
                 type="button"

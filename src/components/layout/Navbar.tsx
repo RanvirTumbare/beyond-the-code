@@ -3,6 +3,7 @@ import { NavLink, Link, useLocation } from 'react-router-dom';
 import { Menu, X, ShieldCheck, ArrowUpRight } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSiteSettings } from '@/hooks/useSiteSettings';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 interface NavItem {
   label: string;
@@ -90,8 +91,9 @@ export const Navbar: React.FC = () => {
           ))}
         </nav>
 
-        {/* Right Action: subtle Login / Dashboard button */}
-        <div className="hidden lg:flex items-center space-x-3">
+        {/* Right Action: subtle Login / Dashboard button & Theme Toggle */}
+        <div className="hidden lg:flex items-center space-x-2.5">
+          <ThemeToggle />
           {session && isAdmin ? (
             <Link
               to="/admin"
@@ -111,7 +113,8 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Hamburger Button */}
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="flex items-center gap-1.5 lg:hidden">
+          <ThemeToggle />
           {session && isAdmin && (
             <Link
               to="/admin"

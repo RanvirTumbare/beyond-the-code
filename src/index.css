@@ -75,3 +75,172 @@
   background: #777F79;
 }
 
+/* ==========================================================================
+   Editorial Dark Mode System
+   Deep forest-charcoal (#111412), surface (#171B18), sage accents (#52A684),
+   and soft readable typography (#E2E8E4).
+   ========================================================================== */
+
+html.dark {
+  --accent-color: #52A684;
+  --accent-hover: #67B896;
+  --accent-light: #1A2E25;
+  --accent-border: #2A483B;
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #111412 !important;
+  color: #E2E8E4 !important;
+}
+
+html.dark ::selection {
+  background-color: #1A2E25;
+  color: #52A684;
+}
+
+/* Base Surfaces & Backgrounds */
+html.dark .bg-white {
+  background-color: #171B18 !important;
+}
+
+html.dark .bg-white\/95,
+html.dark .bg-white\/80 {
+  background-color: rgba(23, 27, 24, 0.94) !important;
+}
+
+html.dark .bg-\[\#F7F8F7\],
+html.dark .bg-\[\#F7F8F7\]\/50,
+html.dark .bg-\[\#F7F8F7\]\/40 {
+  background-color: #131614 !important;
+}
+
+html.dark .bg-\[\#FFFFFF\] {
+  background-color: #111412 !important;
+}
+
+html.dark .bg-\[\#EBF3EF\],
+html.dark .bg-\[\#EBF3EF\]\/40 {
+  background-color: #192720 !important;
+}
+
+html.dark .bg-\[\#F4F8F5\] {
+  background-color: #16221C !important;
+}
+
+/* Text Colors */
+html.dark .text-\[\#202520\] {
+  color: #E2E8E4 !important;
+}
+
+html.dark .text-\[\#585F5A\] {
+  color: #B5BFB8 !important;
+}
+
+html.dark .text-\[\#777F79\] {
+  color: #929D95 !important;
+}
+
+html.dark .text-\[\#9CA39E\] {
+  color: #6D7871 !important;
+}
+
+html.dark .text-\[\#43866A\] {
+  color: #52A684 !important;
+}
+
+html.dark .text-\[\#2E6B52\] {
+  color: #67B896 !important;
+}
+
+/* Borders */
+html.dark .border-\[\#E8ECE9\],
+html.dark .border-\[\#E8ECE9\]\/60 {
+  border-color: #242B26 !important;
+}
+
+html.dark .border-\[\#D5DDD8\],
+html.dark .border-\[\#D1DFD8\] {
+  border-color: #2E3831 !important;
+}
+
+html.dark .border-\[\#C5DDD2\] {
+  border-color: #2A483B !important;
+}
+
+/* Hover States */
+html.dark .hover\:bg-\[\#F7F8F7\]:hover,
+html.dark .hover\:bg-\[\#EFF2F0\]:hover,
+html.dark .hover\:bg-white:hover {
+  background-color: #1E2420 !important;
+}
+
+html.dark .hover\:bg-\[\#E8ECE9\]:hover {
+  background-color: #27302A !important;
+}
+
+html.dark .hover\:border-\[\#D5DDD8\]:hover {
+  border-color: #38453D !important;
+}
+
+html.dark .hover\:border-\[\#43866A\]:hover {
+  border-color: #52A684 !important;
+}
+
+html.dark .hover\:text-\[\#202520\]:hover {
+  color: #FFFFFF !important;
+}
+
+html.dark .hover\:text-\[\#43866A\]:hover {
+  color: #67B896 !important;
+}
+
+/* Form inputs, textareas, selects */
+html.dark input:not([type="checkbox"]):not([type="radio"]),
+html.dark textarea,
+html.dark select {
+  background-color: #1A1F1C !important;
+  color: #E2E8E4 !important;
+  border-color: #2E3831 !important;
+}
+
+html.dark input:not([type="checkbox"]):not([type="radio"]):focus,
+html.dark textarea:focus,
+html.dark select:focus {
+  border-color: #52A684 !important;
+  outline: none !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #6C7770 !important;
+}
+
+/* Modals & Dialogs */
+html.dark .shadow-modal,
+html.dark .shadow-2xl {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7) !important;
+}
+
+html.dark .shadow-subtle {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.dark .shadow-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Dark Scrollbar */
+html.dark ::-webkit-scrollbar-track {
+  background: #111412;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #27302A;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3B4840;
+}
+
+

@@ -21,6 +21,7 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { useMessages } from '@/hooks/useMessages';
 import { useToast } from '@/contexts/ToastContext';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 interface SidebarItem {
   label: string;
@@ -73,6 +74,7 @@ export const AdminLayout: React.FC = () => {
           </span>
         </div>
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <Link
             to="/"
             target="_blank"
@@ -183,6 +185,7 @@ export const AdminLayout: React.FC = () => {
               <span>View Site</span>
               <ExternalLink className="w-3 h-3 text-[#777F79]" />
             </Link>
+            <ThemeToggle className="py-1 px-1.5" />
             <button
               onClick={handleLogout}
               title="Sign out"

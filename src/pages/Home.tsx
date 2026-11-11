@@ -9,6 +9,8 @@ import {
   Mail,
   Globe,
   Sparkles,
+  User,
+  Award,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { PageTransition } from '@/components/layout/PageTransition';
@@ -116,16 +118,36 @@ export const Home: React.FC = () => {
                 {content.hero_intro}
               </p>
 
-              {/* Only 'View My Work' button */}
-              <div className="pt-2 flex items-center">
+              {/* Call-to-Action Buttons */}
+              <div className="pt-2 flex flex-wrap items-center gap-2.5 sm:gap-3">
                 <Link to="/projects">
                   <Button
                     variant="primary"
-                    size="lg"
-                    className="bg-[#202520] hover:bg-[#141814] text-white shadow-sm"
+                    size="md"
+                    className="sm:h-11 sm:px-5 bg-[#202520] hover:bg-[#141814] text-white shadow-sm dark:bg-[#2E3D34] dark:hover:bg-[#3B4E42] dark:border dark:border-[#43594B]"
                     rightIcon={<ArrowRight className="w-4 h-4" />}
                   >
                     View My Work
+                  </Button>
+                </Link>
+                <Link to="/about">
+                  <Button
+                    variant="secondary"
+                    size="md"
+                    className="sm:h-11 sm:px-4 border-[#E8ECE9] hover:border-[#43866A] hover:text-[#43866A] transition-colors dark:border-[#2E3831] dark:bg-[#1A1F1C] dark:hover:border-[#52A684] dark:hover:text-[#52A684]"
+                    leftIcon={<User className="w-4 h-4" />}
+                  >
+                    About Me
+                  </Button>
+                </Link>
+                <Link to="/certificates">
+                  <Button
+                    variant="secondary"
+                    size="md"
+                    className="sm:h-11 sm:px-4 border-[#E8ECE9] hover:border-[#43866A] hover:text-[#43866A] transition-colors dark:border-[#2E3831] dark:bg-[#1A1F1C] dark:hover:border-[#52A684] dark:hover:text-[#52A684]"
+                    leftIcon={<Award className="w-4 h-4" />}
+                  >
+                    View Certifications
                   </Button>
                 </Link>
               </div>

@@ -65,10 +65,32 @@ export function useSiteSettings() {
         return { success: true };
       }
 
+      let targetId = settings.id;
+      if (!targetId || targetId === 'settings-1') {
+        const { data: existingRow } = await supabase
+          .from('site_settings')
+          .select('id')
+          .limit(1)
+          .maybeSingle();
+
+        if (existingRow?.id) {
+          targetId = existingRow.id;
+        } else {
+          const { data: inserted, error: insertError } = await supabase
+            .from('site_settings')
+            .insert([updates])
+            .select()
+            .single();
+          if (insertError) throw insertError;
+          setSettings(inserted as SiteSettings);
+          return { success: true };
+        }
+      }
+
       const { data, error } = await supabase
         .from('site_settings')
         .update(updates)
-        .eq('id', settings.id)
+        .eq('id', targetId)
         .select()
         .single();
 

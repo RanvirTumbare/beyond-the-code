@@ -3,6 +3,7 @@ import {
   Mail,
   Linkedin,
   Github,
+  Globe,
   Download,
   Send,
   CheckCircle2,
@@ -163,6 +164,25 @@ export const Contact: React.FC = () => {
                     </div>
                   </div>
                 )}
+
+                {settings.other_links?.map((link, idx) => (
+                  <div key={idx} className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-[#EBF3EF] text-[#43866A] flex items-center justify-center shrink-0">
+                      <Globe className="w-4 h-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="text-[11px] text-[#777F79] block">{link.label}</span>
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-medium text-[#202520] hover:text-[#43866A] transition-colors break-all"
+                      >
+                        {link.url.replace(/^https?:\/\/(www\.)?/, '')}
+                      </a>
+                    </div>
+                  </div>
+                ))}
               </div>
 
               {settings.resume_url && (

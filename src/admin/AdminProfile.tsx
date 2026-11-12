@@ -18,7 +18,11 @@ import { useSiteSettings } from '@/hooks/useSiteSettings';
 import { useToast } from '@/contexts/ToastContext';
 import { uploadMediaFile } from '@/lib/storage';
 
-export const AdminProfile: React.FC = () => {
+interface AdminProfileProps {
+  embedded?: boolean;
+}
+
+export const AdminProfile: React.FC<AdminProfileProps> = ({ embedded = false }) => {
   const { settings, updateSettings } = useSiteSettings();
   const { success, error: toastError } = useToast();
 
@@ -81,7 +85,9 @@ export const AdminProfile: React.FC = () => {
       linkedin_url: linkedinUrl.trim(),
       github_url: githubUrl.trim(),
       resume_url: resumeUrl,
-      other_links: otherLinks.filter((l) => l.label && l.url),
+      other_links: otherLinks
+        .filter((l) => l.label.trim() && l.url.trim())
+        .map((l) => ({ label: l.label.trim(), url: l.url.trim() })),
     });
 
     setIsSaving(false);
@@ -93,22 +99,123 @@ export const AdminProfile: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-up">
+    <div className={embedded ? 'space-y-6' : 'space-y-6 animate-fade-up'}>
       {/* Page Header */}
-      <div>
-        <span className="text-xs font-semibold uppercase tracking-wider text-[#43866A]">
-          Identity & Documents
-        </span>
-        <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#202520]">
-          Resume & Social Profile
-        </h1>
-        <p className="text-xs sm:text-sm text-[#777F79] mt-1">
-          Manage your primary correspondence email, social channels, and official resume PDF.
-        </p>
-      </div>
+      {!embedded && (
+        <div>
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#43866A]">
+            Identity & Documents
+          </span>
+          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#202520]">
+            Resume & Social Profile
+          </h1>
+          <p className="text-xs sm:text-sm text-[#777F79] mt-1">
+            Manage your primary correspondence email, social channels, and official resume PDF.
+          </p>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Section 1: Resume Document */}
+        {/* Section 1: Contact Email & Primary Socials */}
+        <div className="bg-white border border-[#E8ECE9] rounded-editorial p-6 shadow-subtle space-y-4">
+          <h2 className="font-serif text-lg font-semibold text-[#202520] pb-2 border-b border-[#E8ECE9]">
+            Primary Channels
+          </h2>
+
+          <div className="space-y-4">
+            <Input
+              label="Contact Email"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              leftIcon={<Mail className="w-4 h-4" />}
+              required
+            />
+            <Input
+              label="LinkedIn Profile URL"
+              type="url"
+              placeholder="https://www.linkedin.com/in/your-username"
+              value={linkedinUrl}
+              onChange={(e) => setLinkedinUrl(e.target.value)}
+              leftIcon={<Linkedin className="w-4 h-4" />}
+            />
+            <Input
+              label="GitHub Profile URL"
+              type="url"
+              placeholder="https://github.com/your-username"
+              value={githubUrl}
+              onChange={(e) => setGithubUrl(e.target.value)}
+              leftIcon={<Github className="w-4 h-4" />}
+            />
+          </div>
+        </div>
+
+        {/* Section 2: Other Portfolio / Profile Links */}
+        <div className="bg-white border border-[#E8ECE9] rounded-editorial p-6 shadow-subtle space-y-4">
+          <div className="flex items-center justify-between pb-2 border-b border-[#E8ECE9]">
+            <div>
+              <h2 className="font-serif text-lg font-semibold text-[#202520]">
+                Additional Platforms & Profiles
+              </h2>
+              <p className="text-xs text-[#777F79]">
+                Add links to Kaggle, LeetCode, personal blogs, or technical profiles.
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={handleAddLink}
+              leftIcon={<Plus className="w-3.5 h-3.5" />}
+            >
+              Add Link
+            </Button>
+          </div>
+
+          <div className="space-y-3">
+            {otherLinks.map((link, idx) => (
+              <div
+                key={idx}
+                className="flex flex-col sm:flex-row items-center gap-3 p-2 bg-[#F7F8F7] border border-[#E8ECE9] rounded-editorial"
+              >
+                <div className="w-full sm:w-44">
+                  <input
+                    type="text"
+                    placeholder="Platform Label (e.g. Kaggle)"
+                    value={link.label}
+                    onChange={(e) => handleLinkChange(idx, 'label', e.target.value)}
+                    className="w-full bg-white text-xs p-2 border border-[#E8ECE9] rounded"
+                  />
+                </div>
+                <div className="flex-1 w-full sm:w-auto">
+                  <input
+                    type="url"
+                    placeholder="https://..."
+                    value={link.url}
+                    onChange={(e) => handleLinkChange(idx, 'url', e.target.value)}
+                    className="w-full bg-white text-xs p-2 border border-[#E8ECE9] rounded"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveLink(idx)}
+                  className="p-1.5 text-rose-600 hover:bg-rose-50 rounded"
+                  title="Remove link"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ))}
+            {otherLinks.length === 0 && (
+              <p className="text-xs text-[#9CA39E] italic py-2 text-center">
+                No additional platform links configured.
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Section 3: Resume Document */}
         <div className="bg-white border border-[#E8ECE9] rounded-editorial p-6 shadow-subtle space-y-4">
           <div className="flex items-center justify-between pb-2 border-b border-[#E8ECE9]">
             <div>
@@ -171,102 +278,6 @@ export const AdminProfile: React.FC = () => {
                 </button>
               )}
             </div>
-          </div>
-        </div>
-
-        {/* Section 2: Contact Email & Primary Socials */}
-        <div className="bg-white border border-[#E8ECE9] rounded-editorial p-6 shadow-subtle space-y-4">
-          <h2 className="font-serif text-lg font-semibold text-[#202520] pb-2 border-b border-[#E8ECE9]">
-            Primary Channels
-          </h2>
-
-          <div className="space-y-4">
-            <Input
-              label="Contact Email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              leftIcon={<Mail className="w-4 h-4" />}
-              required
-            />
-            <Input
-              label="LinkedIn Profile URL"
-              value={linkedinUrl}
-              onChange={(e) => setLinkedinUrl(e.target.value)}
-              leftIcon={<Linkedin className="w-4 h-4" />}
-              required
-            />
-            <Input
-              label="GitHub Profile URL"
-              value={githubUrl}
-              onChange={(e) => setGithubUrl(e.target.value)}
-              leftIcon={<Github className="w-4 h-4" />}
-              required
-            />
-          </div>
-        </div>
-
-        {/* Section 3: Other Portfolio / Profile Links */}
-        <div className="bg-white border border-[#E8ECE9] rounded-editorial p-6 shadow-subtle space-y-4">
-          <div className="flex items-center justify-between pb-2 border-b border-[#E8ECE9]">
-            <div>
-              <h2 className="font-serif text-lg font-semibold text-[#202520]">
-                Additional Platforms & Profiles
-              </h2>
-              <p className="text-xs text-[#777F79]">
-                Add links to Kaggle, LeetCode, personal blogs, or technical profiles.
-              </p>
-            </div>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={handleAddLink}
-              leftIcon={<Plus className="w-3.5 h-3.5" />}
-            >
-              Add Link
-            </Button>
-          </div>
-
-          <div className="space-y-3">
-            {otherLinks.map((link, idx) => (
-              <div
-                key={idx}
-                className="flex flex-col sm:flex-row items-center gap-3 p-2 bg-[#F7F8F7] border border-[#E8ECE9] rounded-editorial"
-              >
-                <div className="w-full sm:w-44">
-                  <input
-                    type="text"
-                    placeholder="Platform Label (e.g. Kaggle)"
-                    value={link.label}
-                    onChange={(e) => handleLinkChange(idx, 'label', e.target.value)}
-                    className="w-full bg-white text-xs p-2 border border-[#E8ECE9] rounded"
-                  />
-                </div>
-                <div className="flex-1 w-full sm:w-auto">
-                  <input
-                    type="url"
-                    placeholder="https://..."
-                    value={link.url}
-                    onChange={(e) => handleLinkChange(idx, 'url', e.target.value)}
-                    className="w-full bg-white text-xs p-2 border border-[#E8ECE9] rounded"
-                  />
-                </div>
-                <button
-                  type="button"
-                  onClick={() => handleRemoveLink(idx)}
-                  className="p-1.5 text-rose-600 hover:bg-rose-50 rounded"
-                  title="Remove link"
-                >
-                  <Trash2 className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            ))}
-            {otherLinks.length === 0 && (
-              <p className="text-xs text-[#9CA39E] italic py-2 text-center">
-                No additional platform links configured.
-              </p>
-            )}
           </div>
         </div>
 

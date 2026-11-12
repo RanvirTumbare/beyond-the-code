@@ -92,6 +92,8 @@ export const Contact: React.FC = () => {
     setErrorMessage(null);
   };
 
+  const messageLength = message.trim().length;
+
   return (
     <PageTransition>
       <Helmet>
@@ -292,17 +294,43 @@ export const Contact: React.FC = () => {
                     required
                   />
 
-                  <Textarea
-                    label="Message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Your message..."
-                    rows={4}
-                    minLength={5}
-                    maxLength={4000}
-                    helperText="Minimum 5 characters."
-                    required
-                  />
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <label
+                        htmlFor="contact-message"
+                        className="block text-xs font-semibold uppercase tracking-wider text-[#585F5A]"
+                      >
+                        Message{' '}
+                        <span className="font-normal normal-case text-[#777F79]">
+                          (min. 5 characters)
+                        </span>
+                      </label>
+                      <span
+                        className={`text-[11px] font-mono ${
+                          messageLength === 0
+                            ? 'text-[#777F79]'
+                            : messageLength < 5
+                            ? 'text-amber-600'
+                            : 'text-[#43866A]'
+                        }`}
+                      >
+                        {messageLength < 5
+                          ? `${messageLength} / 5 min characters`
+                          : `${messageLength} / 4000`}
+                      </span>
+                    </div>
+                    <Textarea
+                      id="contact-message"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="Write your message (minimum 5 characters)..."
+                      rows={4}
+                      minLength={5}
+                      maxLength={4000}
+                      helperText="Messages require at least 5 characters (up to 4,000)."
+                      required
+                    />
+                  </div>
 
                   <div className="flex justify-end pt-1">
                     <Button

@@ -2,6 +2,15 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { ContactMessage } from '@/lib/types';
 
+function extractErrorMessage(err: unknown, fallback: string): string {
+  if (err instanceof Error && err.message) return err.message;
+  if (typeof err === 'object' && err !== null && 'message' in err) {
+    const msg = (err as { message?: unknown }).message;
+    if (typeof msg === 'string' && msg.trim()) return msg;
+  }
+  return fallback;
+}
+
 export function useMessages() {
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [loading, setLoading] = useState(true);
@@ -75,8 +84,12 @@ export function useMessages() {
       if (error) throw error;
       return { success: true };
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Failed to deliver message';
-      return { success: false, error: msg };
+      const raw = extractErrorMessage(err, 'Failed to deliver message');
+      const friendly =
+        raw.includes('row-level security') || raw.includes('check constraint')
+          ? 'Please make sure your message is 5–4000 characters and all fields are valid.'
+          : raw;
+      return { success: false, error: friendly };
     }
   };
 
@@ -100,8 +113,7 @@ export function useMessages() {
       setMessages((prev) => prev.map((m) => (m.id === id ? { ...m, is_read: isRead } : m)));
       return { success: true };
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Failed to update message status';
-      return { success: false, error: msg };
+      return { success: false, error: extractErrorMessage(err, 'Failed to update message status') };
     }
   };
 
@@ -121,8 +133,7 @@ export function useMessages() {
       setMessages((prev) => prev.filter((m) => m.id !== id));
       return { success: true };
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Failed to delete message';
-      return { success: false, error: msg };
+      return { success: false, error: extractErrorMessage(err, 'Failed to delete message') };
     }
   };
 

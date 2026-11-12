@@ -45,8 +45,23 @@ export const Contact: React.FC = () => {
       return;
     }
 
-    if (!name.trim() || !email.trim() || !subject.trim() || !message.trim()) {
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedSubject = subject.trim();
+    const trimmedMessage = message.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedSubject || !trimmedMessage) {
       setErrorMessage('Please fill in all fields.');
+      return;
+    }
+
+    if (trimmedMessage.length < 5) {
+      setErrorMessage('Please write at least 5 characters in your message.');
+      return;
+    }
+
+    if (trimmedName.length > 100 || trimmedEmail.length > 150 || trimmedSubject.length > 200 || trimmedMessage.length > 4000) {
+      setErrorMessage('One or more fields exceed the maximum allowed length.');
       return;
     }
 
@@ -254,6 +269,7 @@ export const Contact: React.FC = () => {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Jane Doe"
+                      maxLength={100}
                       required
                     />
                     <Input
@@ -262,6 +278,7 @@ export const Contact: React.FC = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="jane@example.com"
+                      maxLength={150}
                       required
                     />
                   </div>
@@ -271,6 +288,7 @@ export const Contact: React.FC = () => {
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     placeholder="Project Inquiry / Opportunity"
+                    maxLength={200}
                     required
                   />
 
@@ -280,6 +298,9 @@ export const Contact: React.FC = () => {
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Your message..."
                     rows={4}
+                    minLength={5}
+                    maxLength={4000}
+                    helperText="Minimum 5 characters."
                     required
                   />
 
